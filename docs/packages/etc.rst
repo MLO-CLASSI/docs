@@ -8,6 +8,13 @@ The exposure-time calculator estimates detected source counts, sky counts, and
 signal-to-noise in wavelength bins for the spectrograph. It contains a reusable
 calculation layer and a Tk-based desktop interface.
 
+Installation and launch
+-----------------------
+
+The distribution is ``classi-etc`` and its import namespace is ``etc``.
+Installation provides the ``classi-etc`` command for launching the desktop
+interface.
+
 Primary interface
 -----------------
 
@@ -96,8 +103,8 @@ variance use the pixel count in that same extraction box.
 Data dependency
 ---------------
 
-The ETC depends on ``spectrograph-sim`` for the physical instrument, detector,
+The ETC depends on ``classi-sim`` for the physical instrument, detector,
 atmospheric-extinction, throughput, and photon-flux models. Reference curves
-and spectra come from ``spectrograph-shared-data`` through the ``shared_data``
+and spectra come from ``classi-shared-data`` through the ``shared_data``
 resource dictionaries. This keeps ETC predictions consistent with detector
 simulations and makes reference-data changes explicit package changes.

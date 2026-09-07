@@ -11,14 +11,14 @@ provides interchangeable hardware backends for development and deployment.
 Installation and launch
 -----------------------
 
-The distribution is named ``spectrograph-ics``, requires Python 3.11 or newer,
+The distribution is named ``classi-ics``, requires Python 3.11 or newer,
 and installs the ``ics`` Python package. From a sibling checkout, install and
 launch it with:
 
 .. code-block:: bash
 
    python -m pip install -e ./ics
-   spectrograph-ics
+   classi-ics
 
 Application modules therefore use imports such as ``ics.web`` and
 ``ics.devices``; ``src`` is the source directory, not the import namespace.

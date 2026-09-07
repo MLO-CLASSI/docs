@@ -15,19 +15,19 @@ shared calibration/reference files from being copied into every repository.
 
    * - Repository / distribution / import
      - Role
-   * - ``etc`` / ``spectrograph-etc`` / ``etc``
+   * - ``etc`` / ``classi-etc`` / ``etc``
      - Predict source and sky counts and signal-to-noise for a supplied spectrum,
        instrument configuration, exposure time, and optional photometric scaling.
-   * - ``sim`` / ``spectrograph-sim`` / ``simulator``
+   * - ``sim`` / ``classi-sim`` / ``simulator``
      - Forward-model spectra through the optical geometry and detector to produce
        realistic synthetic data products.
-   * - ``pipeline`` / ``spectrograph-pipeline`` / ``pipeline``
+   * - ``pipeline`` / ``classi-pipeline`` / ``pipeline``
      - Reduce detector frames and extract one-dimensional spectra from the fiber
        traces, carrying masks and uncertainties through the reduction.
-   * - ``shared-data`` / ``spectrograph-shared-data`` / ``shared_data``
+   * - ``shared-data`` / ``classi-shared-data`` / ``shared_data``
      - Installable package containing common CSV calibration/reference curves and
        reference spectra.
-   * - ``ics`` / ``spectrograph-ics`` / ``ics``
+   * - ``ics`` / ``classi-ics`` / ``ics``
      - Operate and monitor the science camera, camera-lens focus, telescope-side
        guide hardware, and related observatory interfaces.
 
@@ -48,7 +48,7 @@ A typical checkout can look like this:
    └── docs/
 
 Create a virtual environment and install the packages you need. Package metadata
-should declare ``spectrograph-shared-data`` as a dependency rather than asking
+should declare ``classi-shared-data`` as a dependency rather than asking
 users to copy its files manually. Repository, distribution, and import names
 are not always identical; the table above lists them in that order.
 
@@ -64,9 +64,9 @@ are not always identical; the table above lists them in that order.
    python -m pip install -e ./ics
 
 The ICS requires Python 3.11 or newer. Once installed, launch it with
-``spectrograph-ics``; its Python modules are imported under ``ics`` (for
+``classi-ics``; its Python modules are imported under ``ics`` (for
 example, ``ics.web``). The ETC and pipeline likewise provide the
-``spectrograph-etc`` and ``spectrograph-pipeline`` commands.
+``classi-etc`` and ``classi-pipeline`` commands.
 
 The ICS can be kept in a separate environment because hardware-control stacks can
 have tighter platform and version constraints than the analysis software.

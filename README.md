@@ -1,6 +1,6 @@
-# MLO Spectrograph Software Documentation
+# MLO CLASSI Spectrograph Software Documentation
 
-Sphinx (RTD) documentation for spectrograph software.
+Sphinx (RTD) documentation for the CLASSI Spectrograph software.
 
 The site is designed to be hosted from this repository with GitHub Pages while
 using the Read the Docs Sphinx theme. It documents the cross-package user

@@ -3,7 +3,7 @@ from __future__ import annotations
 import os
 from datetime import datetime, timezone
 
-project = "MLO Spectrograph Software"
+project = "MLO CLASSI Spectrograph"
 author = "Caden Gobat (SDSU)"
 copyright = f"{datetime.now(timezone.utc).year}, San Diego State University"
 
@@ -21,7 +21,7 @@ nitpicky = True
 html_theme = "sphinx_rtd_theme"
 html_static_path = ["_static"]
 html_css_files = ["custom.css"]
-html_title = "MLO Spectrograph Software"
+html_title = "MLO CLASSI Spectrograph"
 html_show_sourcelink = True
 
 html_theme_options = {

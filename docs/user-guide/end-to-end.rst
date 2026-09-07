@@ -45,6 +45,6 @@ Reproducibility
 ---------------
 
 Record the versions (or Git commit hashes) of the ETC, simulator, pipeline, and
-``spectrograph-shared-data`` distribution used for an observation or simulation
+``classi-shared-data`` distribution used for an observation or simulation
 campaign. A change to a throughput curve can alter both the ETC prediction and
 the simulator even when no Python source code changes.

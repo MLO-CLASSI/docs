@@ -13,7 +13,7 @@ Shared data
 -----------
 
 When a throughput or reference spectrum is used by more than one package, move
-it to ``spectrograph-shared-data`` and update the dependent packages together.
+it to ``classi-shared-data`` and update the dependent packages together.
 Avoid fixing a
 scientific discrepancy by editing separate copies of the same curve in multiple
 repositories.

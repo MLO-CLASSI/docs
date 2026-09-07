@@ -4,7 +4,7 @@ shared-data
 Purpose
 -------
 
-``spectrograph-shared-data`` is an installable Python distribution containing common
+``classi-shared-data`` is an installable Python distribution containing common
 spectrograph reference files. It exists so that each scientific repository can
 declare a dependency on one authoritative data package instead of carrying a
 private copy of the same curves.
@@ -25,7 +25,7 @@ The current distribution contains two top-level data directories:
    └── pyproject.toml
 
 The repository is named ``shared-data``, the distribution installed by pip is
-``spectrograph-shared-data``, and the import package is
+``classi-shared-data``, and the import package is
 ``shared_data``.
 
 The packaging metadata includes ``csv_files/*.csv`` and all files immediately

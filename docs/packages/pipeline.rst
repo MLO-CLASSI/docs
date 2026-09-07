@@ -10,19 +10,23 @@ preserving detector masks, uncertainties, and per-fiber identity.
 Installation and command line
 -----------------------------
 
-The distribution is ``spectrograph-pipeline`` and its import namespace is
-``pipeline``. Installation provides the ``spectrograph-pipeline`` command:
+The distribution is ``classi-pipeline`` and its import namespace is
+``pipeline``. Installation provides the ``classi-pipeline`` command:
 
 .. code-block:: bash
 
    python -m pip install -e ./pipeline
-   spectrograph-pipeline l1 science_l0.fits science_l1.fits \
+   classi-pipeline l1 science_l0.fits science_l1.fits \
        --center 512.0 --spacing 25.7 \
        --gain 1.2 --read-noise 3.5
 
 Use ``--centers`` for an explicit comma-separated list, or ``--center`` and
 ``--spacing`` with the configurable ``--n-traces`` value. Bias, dark, and flat
 masters can be supplied with ``--bias``, ``--dark``, and ``--flat``.
+
+The L1 ``--unit`` option supplies the science-image unit when ``BUNIT`` is
+absent or overrides the header value when explicitly supplied. It defaults to
+``adu``.
 
 Processing levels
 -----------------

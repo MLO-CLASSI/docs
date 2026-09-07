@@ -11,10 +11,10 @@ The software stack has three layers:
 #. **Scientific modeling and reduction** -- ETC, simulator, and pipeline.
 #. **Instrument operation** -- the ICS and hardware-specific adapters.
 
-The ``spectrograph-shared-data`` distribution (imported as ``shared_data``) is
+The ``classi-shared-data`` distribution (imported as ``shared_data``) is
 the common reference-data dependency at the bottom of the scientific stack.
 The ETC also reuses the physical and throughput models from
-``spectrograph-sim`` instead of maintaining a parallel implementation. Together
+``classi-sim`` instead of maintaining a parallel implementation. Together
 these dependencies prevent the ETC and simulator from silently diverging.
 
 Instrument model

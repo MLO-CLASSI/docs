@@ -36,7 +36,7 @@ counts. The default of 1.0 assumes perfect coupling.
 
 Detector sampling, fiber pitch, extraction fraction, read noise, telescope
 collecting area, and the component throughput model are derived from the
-selected camera and the shared ``spectrograph-sim`` instrument model rather
+selected camera and the shared ``classi-sim`` instrument model rather
 than entered as independent GUI parameters. The default instrument
 configuration is the FLI Kepler camera with the Newport 1294 grating.
 
