@@ -48,21 +48,31 @@ The ETC interprets input-spectrum wavelengths, ``wave_centers``, and
 rest-frame template must be transformed to the observer frame before it is
 passed to the calculator.
 
+Each bin extends from ``wave_center - binsize / 2`` through
+``wave_center + binsize / 2``. The source spectrum must cover both boundaries
+of every requested bin. The ETC linearly interpolates source and sky flux
+densities at the exact boundaries before integrating, rather than integrating
+only the samples that happen to fall inside the bin.
+
 Result structure
 ----------------
 
 ``get_SNR_from_spectrum`` returns a mapping containing:
 
 ``bins``
-   A sequence of ``SNRBinResult`` objects with wavelength center, source counts,
-   sky counts, S/N, and mean component throughputs.
+   A sequence of ``SNRBinResult`` objects. Each result contains
+   ``wave_center_nm``, ``source_counts``, ``sky_counts``, ``snr``, mean
+   ``component_averages``, and the bin-specific ``n_wave_pixels``,
+   ``n_total_pixels``, ``read_noise_var``, and ``dark_counts`` values.
 
 ``meta``
    Resolved detector/instrument values such as read noise, dispersion,
    ``extraction_aperture_pix``, ``extraction_fraction``, grating, airmass,
    ``fiber_coupling_efficiency``, ``sky_background``, and any spectrum-scaling
    factor. ``detector_temperature_c`` records the fixed -20 °C operating
-   assumption used to select each camera's dark current.
+   assumption used to select each camera's dark current. Pixel counts and their
+   associated read-noise and dark-current terms vary by wavelength bin and are
+   therefore stored on each ``SNRBinResult``, not in ``meta``.
 
 ``throughput_plot``
    Wavelength and component arrays suitable for plotting the response used in

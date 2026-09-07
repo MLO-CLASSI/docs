@@ -62,7 +62,15 @@ variance use the same extraction-box pixel count. The detector temperature is
 not a user input: the ETC uses each camera's fixed dark-current value at -20 °C
 and records that assumption in the result metadata.
 
-The reported result for each wavelength bin includes source counts, sky
+Source and sky spectra are linearly interpolated at the exact requested bin
+boundaries before integration, so an input spectrum must cover every complete
+bin. For the default detector configuration, the spectral width of each bin is
+computed from the nonlinear ``SpectrographModel.wavelength_to_x()`` mapping
+rather than from ``binsize / dispersion``. Consequently, the spectral and total
+pixel counts and their read-noise and dark-current contributions are reported
+separately on each bin result.
+
+The reported result for each wavelength bin also includes source counts, sky
 counts, S/N, and mean component throughputs.
 
 Recommended workflow
