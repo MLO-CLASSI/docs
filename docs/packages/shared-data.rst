@@ -53,6 +53,12 @@ many readers. For libraries that require a real filesystem path, wrap a value
 with ``importlib.resources.as_file`` so it remains compatible with different
 package loaders.
 
+The authoritative list of available spectra and their metadata is maintained
+in the shared-data repository's `reference-spectrum inventory`_.
+
+.. _reference-spectrum inventory:
+   https://github.com/MLO-CLASSI/shared-data/blob/main/reference_spectra/README.md
+
 What belongs here?
 ------------------
 
