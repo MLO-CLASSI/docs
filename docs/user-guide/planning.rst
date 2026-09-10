@@ -2,8 +2,9 @@ Planning an observation
 =======================
 
 The exposure-time calculator is the first scientific tool in the normal
-workflow. It predicts the signal-to-noise ratio in user-selected wavelength bins
-for a source spectrum and instrument configuration.
+workflow. It predicts the signal-to-noise ratio in user-selected wavelength
+bins for a source spectrum and instrument configuration, or calculates the AB
+magnitude that reaches a requested S/N in each bin for a fixed exposure time.
 
 Inputs
 ------
@@ -19,11 +20,15 @@ are in the observer frame, together with:
 * numerical airmass;
 * fiber length;
 * fiber-coupling efficiency; and
-* optional target AB magnitude plus LSST magnitude band for flux scaling.
+* either a target AB magnitude and LSST band for a forward S/N calculation, or
+  a target S/N and LSST band for a limiting-magnitude calculation.
 
 The ETC currently supports scaling a template spectrum to LSST ``g``, ``r``,
 or ``i`` photometry in the AB system. This is useful when the spectral
 shape is known or assumed but only broadband target photometry is available.
+For a limiting-magnitude calculation, the template still supplies the spectral
+shape, but its absolute normalization does not affect the result since the
+limiting observable magnitudes are the output.
 
 The ETC does not apply a redshift correction. If a template is in the rest
 frame, transform it to the observer frame before supplying it to the ETC. The
@@ -85,8 +90,11 @@ Recommended workflow
    or bright sky background.
 #. Estimate the point-source fiber-coupling efficiency for the observing setup.
 #. Evaluate several wavelength bins, especially the region containing the
-   diagnostic spectral feature that drives the observation.
-#. Adjust exposure time until the limiting bin reaches the desired S/N.
+   diagnostic spectral feature that drives the observation. Either compute the
+   S/N of a source with known brightness or compute the limiting magnitude for
+   a target S/N and fixed exposure time.
+#. Adjust exposure time or compare the per-bin limiting magnitudes until the
+   observation meets the scientific requirement.
 #. Check the component-throughput plot if the result is unexpectedly poor.
 
 The ETC answer is a planning estimate, not a substitute for the simulator when

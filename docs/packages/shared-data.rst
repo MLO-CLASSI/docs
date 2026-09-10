@@ -40,13 +40,14 @@ stem. Use these as the primary interface rather than constructing paths from
 
 .. code-block:: python
 
+   import pandas as pd
    from shared_data import CSV_FILES, REFERENCE_SPECTRA
 
    qe_file = CSV_FILES["kaf8300c_qe"]
+   collimator_file = CSV_FILES["ac508-180-ab"]
    template_file = REFERENCE_SPECTRA["SNIa_max_z0p05"]
 
-   with qe_file.open("rb") as handle:
-       payload = handle.read()
+   qe = pd.read_csv(qe_file, header=None, names=["wavelength", "transmission"])
 
 The values support methods such as ``open()`` and can be passed directly to
 many readers. For libraries that require a real filesystem path, wrap a value
