@@ -51,7 +51,8 @@ Throughput accounting
 The calculation keeps the major throughput terms separate before multiplying
 them into the total response. This makes it possible to inspect detector,
 grating, fiber, atmosphere, and lens contributions individually and to disable a
-term for diagnostic comparisons.
+term for diagnostic comparisons. The fiber term uses the CeramOptec UVNS
+attenuation profile distributed by ``classi-shared-data``.
 
 The ``dark``, ``grey``, and ``bright`` choices select line-resolved DESI sky
 spectra. Each sky spectrum is integrated on its own finely sampled wavelength

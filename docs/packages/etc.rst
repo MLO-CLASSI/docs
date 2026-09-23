@@ -162,5 +162,6 @@ Data dependency
 The ETC depends on ``classi-sim`` for the physical instrument, detector,
 atmospheric-extinction, throughput, and photon-flux models. Reference curves
 and spectra come from ``classi-shared-data`` through the ``shared_data``
-resource dictionaries. This keeps ETC predictions consistent with detector
+resource dictionaries. The default fiber-throughput term uses the CeramOptec
+UVNS attenuation curve. This keeps ETC predictions consistent with detector
 simulations and makes reference-data changes explicit package changes.
