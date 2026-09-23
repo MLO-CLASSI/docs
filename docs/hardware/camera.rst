@@ -1,10 +1,11 @@
-Camera: FLI Kepler KL400BI
-==========================
+Camera: FLI Aurora AR571
+========================
 
-The science camera is an FLI Kepler ``KL400BI`` with a back-illuminated
-GSense400 sensor and a UV-grade fused-silica (UVFS) entrance window. The sensor
-format and pixel size are central inputs to the simulator, ETC, and pipeline
-geometry.
+The current modeled science-camera baseline and ETC default is the FLI Aurora
+``AR571``, which uses a Sony ``IMX571`` CMOS sensor. The sensor format and pixel
+size are central inputs to the simulator, ETC, and pipeline geometry. Other
+camera models, including the earlier Kepler configuration, remain selectable
+in the ETC for comparison.
 
 .. list-table:: Key catalog and configured properties
    :header-rows: 1
@@ -13,32 +14,36 @@ geometry.
    * - Property
      - Value
    * - Sensor
-     - GSENSE400BSI
+     - Sony IMX571
    * - Active pixels
-     - 2048 × 2048
+     - 6244 × 4168
    * - Pixel size
-     - 11 µm × 11 µm
+     - 3.76 µm × 3.76 µm
    * - Active area
-     - Approximately 22.5 mm × 22.5 mm
+     - 28.2 mm diagonal
    * - Digitization
      - 16 bit
    * - Read noise
-     - Approximately 1.6 e⁻ in rolling HDR mode
+     - Approximately 1 e⁻
+   * - Dark current
+     - Approximately 0.002 e⁻ pixel⁻¹ s⁻¹ at -20 °C
+   * - Full well
+     - Approximately 50,000 e⁻
    * - Peak quantum efficiency
-     - Approximately 95%
+     - Approximately 91%
    * - Interface
-     - USB 3.0
-   * - Camera window
-     - UV-grade fused silica
+     - USB 3 / QSFP
+   * - Shutter
+     - Rolling
+   * - Maximum frame rate
+     - 7 frames s⁻¹
 
 Read noise, dark current, frame rate, full well, and cooling performance depend
-on readout and operating mode.
+on readout and operating mode. The ETC currently models 1 e⁻ read noise and
+0.002 e⁻ pixel⁻¹ s⁻¹ dark current at -20 °C.
 
 Vendor resources
 ----------------
 
-* `FLI KL400BI product page <https://www.flicamera.com/models/kl400-bi>`_
-* `KL400 spec sheet (PDF) <https://cdn.prod.website-files.com/6787ccd15f899cb85836f2b9/697a57ca9dcc29b9e19f0afb_KL400BI.pdf>`_
-* `Kepler series user manual <https://cdn.prod.website-files.com/6787ccd15f899cb85836f2b9/67c1ef8f65949b671e02fa7c_Kepler%20User%20Manual.pdf>`_
-* `Gpixel GSENSE400BSI product page <https://gpixel.com/en/pro_details_1196.html>`_
-* `GSENSE400BSI product flyer (PDF) <https://gpixel.com/public/uploads/admin/file/pdf-fb70ab79393a133347e2154f7a42a4ac.pdf>`_
+* `FLI AR571 product page <https://www.flicamera.com/models/ar571>`_
+* `FLI Aurora camera family <https://www.flicamera.com/product/aurora-cmos-camera>`_

@@ -43,7 +43,7 @@ Detector sampling, fiber pitch, extraction fraction, read noise, telescope
 collecting area, and the component throughput model are derived from the
 selected camera and the shared ``classi-sim`` instrument model rather
 than entered as independent GUI parameters. The default instrument
-configuration is the FLI Kepler camera with the Newport 1294 grating.
+configuration is the FLI Aurora AR571 camera with the Newport 1294 grating.
 
 Throughput accounting
 ---------------------
