@@ -18,7 +18,8 @@ The distribution is ``classi-pipeline`` and its import namespace is
    python -m pip install -e ./pipeline
    classi-pipeline l1 science_l0.fits science_l1.fits \
        --center 512.0 --spacing 25.7 \
-       --gain 1.2 --read-noise 3.5
+       --gain 1.2 --read-noise 3.5 \
+       --rebin 4 --plot
 
 Use ``--centers`` for an explicit comma-separated list, or ``--center`` and
 ``--spacing`` with the configurable ``--n-traces`` value. Bias, dark, and flat
@@ -27,6 +28,18 @@ masters can be supplied with ``--bias``, ``--dark``, and ``--flat``.
 The L1 ``--unit`` option supplies the science-image unit when ``BUNIT`` is
 absent or overrides the header value when explicitly supplied. It defaults to
 ``adu``.
+
+``--rebin N`` sums groups of ``N`` adjacent dispersion pixels in each output
+spectrum; the default of 1 preserves the native sampling. Counts are summed,
+uncertainties are combined in quadrature, and the output ``PIXEL`` coordinate
+is the mean of the contributing native coordinates. Only complete groups are
+written, so as many as ``N - 1`` trailing native pixels can be omitted. The
+``REBIN`` and ``NTRIM`` FITS keywords record these choices. ``N`` must be a
+positive integer and cannot exceed the extracted spectrum length.
+
+``--plot`` writes a quicklook PNG beside the L1 product, using the same stem as
+the requested FITS output. It plots the final stored spectra, including any
+requested rebinning.
 
 Processing levels
 -----------------

@@ -24,7 +24,7 @@ properties are:
 
 ``get_SNR_from_spectrum(...)``
    Calculate counts and S/N for one or more wavelength bins. The default
-   configuration uses the FLI Kepler camera, Newport 1294 grating, dark-sky
+   configuration uses the FLI Aurora AR571 camera, Newport 1294 grating, dark-sky
    background, and a fiber-coupling efficiency of 1.0.
 
 ``get_limiting_magnitudes_from_spectrum(...)``
@@ -117,7 +117,7 @@ Example
        wave_centers=[550.0, 650.0, 750.0],
        binsize=5.0,
        sky_background="grey",
-       camera_model="Kepler",
+       camera_model="Aurora",
        grating_id=1294,
        airmass=1.3,
        fiber_coupling_efficiency=0.75,
@@ -140,7 +140,7 @@ To solve for the per-bin limiting magnitude at a fixed exposure time:
        target_snr=5.0,
        magnitude_band="r",
        sky_background="dark",
-       camera_model="Kepler",
+       camera_model="Aurora",
        grating_id=1294,
        airmass=1.3,
        fiber_coupling_efficiency=0.75,
@@ -162,5 +162,6 @@ Data dependency
 The ETC depends on ``classi-sim`` for the physical instrument, detector,
 atmospheric-extinction, throughput, and photon-flux models. Reference curves
 and spectra come from ``classi-shared-data`` through the ``shared_data``
-resource dictionaries. This keeps ETC predictions consistent with detector
+resource dictionaries. The default fiber-throughput term uses the CeramOptec
+UVNS attenuation curve. This keeps ETC predictions consistent with detector
 simulations and makes reference-data changes explicit package changes.

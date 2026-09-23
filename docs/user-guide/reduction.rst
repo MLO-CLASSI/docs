@@ -39,6 +39,20 @@ extraction. Horne/optimal extraction is available in the codebase but is not
 currently selected by this Level-1 entry point; when enabled, it should use the
 propagated variance rather than treating all spatial pixels equally.
 
+Output rebinning and quicklooks
+-------------------------------
+
+Use the L1 ``--rebin N`` option when the stored spectra should combine ``N``
+adjacent native dispersion pixels. Rebinning occurs after extraction: counts
+are summed and uncertainties are combined in quadrature. Any incomplete group
+at the trailing end of a trace is omitted, and the L1 FITS headers record both
+the rebin factor and number of omitted pixels. This reduces the number of
+stored samples but does not improve the instrument's spectral resolution.
+
+Use ``--plot`` to write a quicklook PNG of all extracted traces beside the L1
+FITS file. The plot reflects the data actually written to the product, including
+any rebinning, and is intended for inspection rather than scientific analysis.
+
 Multi-fiber products
 --------------------
 

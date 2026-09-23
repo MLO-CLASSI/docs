@@ -43,7 +43,7 @@ Detector sampling, fiber pitch, extraction fraction, read noise, telescope
 collecting area, and the component throughput model are derived from the
 selected camera and the shared ``classi-sim`` instrument model rather
 than entered as independent GUI parameters. The default instrument
-configuration is the FLI Kepler camera with the Newport 1294 grating.
+configuration is the FLI Aurora AR571 camera with the Newport 1294 grating.
 
 Throughput accounting
 ---------------------
@@ -51,7 +51,8 @@ Throughput accounting
 The calculation keeps the major throughput terms separate before multiplying
 them into the total response. This makes it possible to inspect detector,
 grating, fiber, atmosphere, and lens contributions individually and to disable a
-term for diagnostic comparisons.
+term for diagnostic comparisons. The fiber term uses the CeramOptec UVNS
+attenuation profile distributed by ``classi-shared-data``.
 
 The ``dark``, ``grey``, and ``bright`` choices select line-resolved DESI sky
 spectra. Each sky spectrum is integrated on its own finely sampled wavelength
