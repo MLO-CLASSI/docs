@@ -1,7 +1,7 @@
 Operating the instrument
 ========================
 
-The instrument-control system provides the observing interface while keeping
+The instrument control system provides the observing interface while keeping
 hardware-specific details behind backend classes. This chapter is the framework
 for the CLASSI operator procedure; commissioning should replace the remaining
 configuration-dependent guidance with verified values, screenshots, and

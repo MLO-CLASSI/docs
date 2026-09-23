@@ -7,7 +7,7 @@ Purpose and scope
 CLASSI is a low-resolution, fiber-fed spectrograph for rapid optical
 spectroscopy at Mount Laguna Observatory. The instrument combines a telescope
 focal-plane fiber input, a compact bench spectrograph, a cooled scientific CMOS
-detector, an instrument-control system, and a common set of planning,
+detector, an instrument control system, and a common set of planning,
 simulation, and reduction tools.
 
 This page defines the system-level view used throughout the manual. Individual
@@ -68,7 +68,7 @@ CLASSI operation spans several connected subsystems:
 * the fiber feed and bench spectrograph, which transport and disperse the light;
 * the science camera and camera-lens controller, which set focus/aperture and
   acquire detector frames;
-* the instrument-control system (ICS), which presents status and acquisition
+* the instrument control system (ICS), which presents status and acquisition
   controls and writes science FITS files; and
 * the planning and reduction software, which predicts exposure performance and
   turns detector frames into calibrated spectra.

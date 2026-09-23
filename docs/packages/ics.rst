@@ -1,4 +1,4 @@
-Instrument-control system
+Instrument control system
 =========================
 
 Purpose
