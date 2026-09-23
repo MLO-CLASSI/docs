@@ -1,17 +1,21 @@
 MLO CLASSI Spectrograph
 =======================
 
-This site is the unified user and developer documentation for the software
-supporting the MLO CLASSI (Claud Low-resolution Array-fed Small Scale Integral
-field) spectrograph. The software is split into focused repositories, but users
-should approach the instrument as one system rather than learning each
-repository in isolation.
+This site is the documentation home for the MLO CLASSI (Claud Low-resolution
+Array-fed Small Scale Integral field) spectrograph. It describes the instrument
+as an integrated observing system: its optical and detector hardware, observing
+and calibration workflows, data products, control system, exposure-time tools,
+simulator, and reduction pipeline.
 
-The normal path through the software is:
+The :doc:`user-guide/index` is the primary manual for observers and operators.
+Hardware and software pages provide deeper reference material, but repository
+boundaries do not define the observing workflow.
+
+The normal path through the instrument is:
 
 .. code-block:: text
 
-   target or template spectrum
+   target and observing requirements
             |
             v
        Exposure-time calculator
@@ -19,21 +23,25 @@ The normal path through the software is:
             v
       observing plan / SNR target
             |
-       +----+-------------------+
-       |                        |
-       v                        v
-   Simulator               Instrument control
-       |                        |
-       v                        v
-   synthetic FITS          acquired FITS frames
-       \                        /
-        +----------+-----------+
-                   |
-                   v
-             Reduction pipeline
-                   |
-                   v
-            extracted spectra
+            telescope
+               |
+               v
+        fiber input assembly
+               |
+               v
+    collimator -> filter -> grating
+               |
+               v
+       camera lens -> detector
+               |
+               v
+        acquired FITS frames
+               |
+               v
+         reduction pipeline
+               |
+               v
+        calibrated spectra
 
 Reference throughput curves, detector-response data, atmospheric-extinction
 data, and template spectra are shared across packages through the
@@ -47,10 +55,11 @@ data, and template spectra are shared across packages through the
 Start here
 ----------
 
-* :doc:`getting-started` -- install the software and understand the repository split.
-* :doc:`user-guide/index` -- end-to-end guide from planning through extracted spectra.
-* :doc:`hardware/index` -- instrument optics, camera, and controllers.
-* :doc:`packages/index` -- package-by-package documentation.
+* :doc:`user-guide/index` -- instrument manual from system overview through data reduction.
+* :doc:`user-guide/overview` -- what CLASSI is and how its subsystems fit together.
+* :doc:`hardware/index` -- optics, detector, mechanisms, and controllers.
+* :doc:`getting-started` -- choose the documentation path for your role and install software if needed.
+* :doc:`packages/index` -- package-by-package software reference.
 * :doc:`reference/conventions` -- units, coordinate, detector, and spectrum conventions.
 * :doc:`development` -- how the repositories fit together and how to update these docs.
 

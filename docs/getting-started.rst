@@ -1,6 +1,28 @@
 Getting started
 ===============
 
+Choose a path
+-------------
+
+Most users do not need to begin with the software repositories.
+
+* **Observers and operators:** start with the
+  :doc:`instrument overview <user-guide/overview>`, then continue through
+  :doc:`planning <user-guide/planning>`,
+  :doc:`observing <user-guide/observing>`, and
+  :doc:`reduction <user-guide/reduction>`.
+* **Instrument scientists:** read the :doc:`hardware overview <hardware/index>`,
+  :doc:`system architecture <user-guide/architecture>`, and
+  :doc:`reference conventions <reference/conventions>` before using the
+  component and package reference pages.
+* **Software developers:** use the repository map below and the
+  :doc:`development guide <development>`.
+
+The operational procedures in this manual should be checked against the current
+observatory configuration and commissioning status. Repository documentation is
+useful implementation reference, but it is not a substitute for the observing
+workflow.
+
 Software layout
 ---------------
 
@@ -81,4 +103,4 @@ changes the recorded traces. Use the pipeline for real or simulated FITS data.
 Use the ICS only when controlling the instrument or developing against its mock
 backends.
 
-Continue with :doc:`user-guide/index` for the complete observing workflow.
+Continue with :doc:`user-guide/index` for the instrument user manual.
