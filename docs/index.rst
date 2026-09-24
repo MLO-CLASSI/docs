@@ -13,35 +13,30 @@ boundaries do not define the observing workflow.
 
 The normal path through the instrument is:
 
-.. code-block:: text
+.. container:: instrument-flow
 
-   target and observing requirements
-            |
-            v
-       Exposure-time calculator
-            |
-            v
-      observing plan / SNR target
-            |
-            telescope
-               |
-               v
-        fiber input assembly
-               |
-               v
-    collimator -> filter -> grating
-               |
-               v
-       camera lens -> detector
-               |
-               v
-        acquired FITS frames
-               |
-               v
-         reduction pipeline
-               |
-               v
-        calibrated spectra
+   .. container:: flow-stage
+
+      **1. Plan**
+
+      Target and observing requirements |flow-arrow| exposure-time calculator
+      |flow-arrow| exposure time and S/N target
+
+   .. container:: flow-stage
+
+      **2. Acquire**
+
+      Telescope |flow-arrow| fiber input |flow-arrow| collimator, filter, and
+      grating |flow-arrow| camera lens and detector |flow-arrow| raw FITS frames
+
+   .. container:: flow-stage
+
+      **3. Reduce**
+
+      Raw FITS frames |flow-arrow| reduction pipeline |flow-arrow| calibrated
+      spectra
+
+.. |flow-arrow| unicode:: U+2192
 
 Reference throughput curves, detector-response data, atmospheric-extinction
 data, and template spectra are shared across packages through the

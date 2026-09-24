@@ -32,9 +32,29 @@
   text-underline-offset: 2px;
 }
 
-.workflow-box {
-  border-left: 4px solid var(--mlo-gold);
-  padding: 0.75rem 1rem;
-  margin: 1rem 0;
+.instrument-flow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.25rem 0;
+}
+
+.instrument-flow .flow-stage {
+  border-top: 4px solid var(--mlo-gold);
+  padding: 1rem;
   background: #faf8f1;
+}
+
+.instrument-flow .flow-stage p {
+  margin: 0;
+}
+
+.instrument-flow .flow-stage p + p {
+  margin-top: 0.5rem;
+}
+
+@media screen and (max-width: 700px) {
+  .instrument-flow {
+    grid-template-columns: 1fr;
+  }
 }
