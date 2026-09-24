@@ -30,6 +30,8 @@ Startup and health check
    configuration for the observatory host.
 #. Verify communication with the telescope/guide interfaces, science camera,
    and camera-lens controller before moving hardware or beginning an exposure.
+#. Confirm that the deployment's ``config.ini`` names the installed optical
+   components and contains the correct instrument geometry and data root.
 #. Confirm detector cooling and readout mode, focus position, lens aperture,
    filter state, grating configuration, and writable data destination.
 #. Acquire a short test exposure and verify that the FITS file is readable,
@@ -66,7 +68,9 @@ A normal acquisition loop is:
 #. Acquire and center the target on the intended fiber using the guide-side
    acquisition system.
 #. Confirm guiding and record any offsets or nonstandard fiber selection.
-#. Verify the active instrument configuration before starting the exposure.
+#. Enter the observer name, target, image type, exposure time, binning, and any
+   useful comment; verify the active instrument configuration before starting
+   the exposure.
 #. Acquire the science frame, then inspect the detector image for saturation,
    clipping, unexpected background, trace motion, and obvious focus changes.
 #. Repeat or adjust the exposure only after preserving the original frame and
@@ -143,4 +147,4 @@ Operational caution
 
 Hardware configuration, device names, ports, and credentials are deployment
 configuration, not library defaults. Keep credentials out of the repository and
-use environment files or the deployment system's secret management.
+use the deployment ``config.ini`` or the deployment system's secret management.

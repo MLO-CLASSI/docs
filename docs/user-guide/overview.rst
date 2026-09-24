@@ -51,7 +51,7 @@ The principal spectrograph components currently documented are:
      - Canon EF 100mm f/2 USM
      - Images the dispersed beam onto the detector.
    * - Science detector
-     - FLI Kepler KL400BI, 2048 × 2048, 11 µm pixels
+     - FLI Aurora AR571, 6244 × 4168, 3.76 µm pixels
      - Records the two-dimensional fiber spectra.
 
 These are component or configured values. Spectral coverage, resolution,

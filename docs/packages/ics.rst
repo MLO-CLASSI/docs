@@ -18,6 +18,7 @@ launch it with:
 .. code-block:: bash
 
    python -m pip install -e ./ics
+   cp ics/config.ini.example config.ini
    classi-ics
 
 Application modules therefore use imports such as ``ics.web`` and
@@ -26,25 +27,17 @@ Application modules therefore use imports such as ``ics.web`` and
 Backend selection
 -----------------
 
-Environment configuration selects the implementations used for each hardware
-family.
+The science camera and camera-lens controller use INDI. The default INDI device
+names are ``FLI Aurora`` and ``Pinefeat CEF``; the observer interface can select
+different devices discovered on the configured INDI server without restarting
+the ICS.
 
-``ICS_BACKEND_MODE``
-   Selects the instrument-side camera/focus implementation. ``mock`` is used for
-   development; ``indi`` connects to the INDI server used by the science-camera
-   and focus devices.
+The ``[backends]`` section of ``config.ini`` selects ``mock`` or ``ace``
+implementations independently for ``tcs``, ``guide_camera``, and ``stage``.
+When the stage backend is ``ace``, the configured X, Y, and optional focus/Z
+axis names determine which axes are exposed.
 
-``ICS_TCS_BACKEND``
-   Selects the telescope-control backend.
-
-``ICS_GUIDE_CAMERA_BACKEND``
-   Selects the guide-camera backend.
-
-``ICS_STAGE_BACKEND``
-   Selects guide-stage motion. ACE-backed stage axes can be configured
-   individually so an optional focus/Z axis does not need to exist.
-
-The factory layer builds the concrete backend objects from this configuration,
+The factory layer builds the concrete backend objects from these settings,
 which keeps the rest of the application independent of the vendor interface.
 
 Web application
@@ -58,9 +51,29 @@ inspection tools in the browser.
 Configuration
 -------------
 
-Keep deployment-specific device names and ACE/INDI addresses in the environment
-rather than source code. A typical environment file defines the local INDI host
-and devices plus the ACE node/instrument names for the telescope, guide camera,
-and guide-stage axes.
+Copy the repository's
+`config.ini.example <https://github.com/MLO-CLASSI/ics/blob/main/config.ini.example>`_
+to ``config.ini`` and adjust it for the deployment. ``classi-ics`` reads
+``config.ini`` from the current working directory by default;
+``create_app(config_path)`` accepts an alternate path for embedded or test
+deployments. Relative ``data_root`` paths are resolved relative to the
+configuration file rather than the process working directory.
+
+The file groups settings into ``[server]``, ``[instrument]``, ``[js9]``,
+``[indi]``, ``[backends]``, and ``[ace]`` sections. It is the authoritative
+inventory of supported options and defaults. Instrument geometry and component
+names configured there are written into acquired FITS headers, so they must
+match the hardware actually in use.
 
 Never commit production credentials or secret keys.
+
+FITS metadata
+-------------
+
+The exposure form records the observer, target, image type, exposure request,
+binning, and optional comment. After acquisition, the ICS preserves the
+camera-reported exposure time and supplements the raw header with provenance,
+instrument configuration, detector state, target and telescope coordinates,
+guide/stage state, timing, and file metadata. See
+:doc:`../reference/products` for the keyword conventions, including the
+distinction between requested and actual exposure time.
