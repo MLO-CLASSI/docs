@@ -46,8 +46,9 @@ Development versus deployment
 
 Use mock backends for UI and workflow development. Hardware deployment can use
 INDI for instrument-side devices such as the science camera and camera-lens
-focus controller, while telescope and guide-side devices can be reached through
-ACE Connector interfaces.
+focus controller. Telescope-side devices are reached through the TCS-hosted ACE
+Alpaca bridge, so the ICS host needs only Alpyca and network access to the
+bridge; it does not need the vendor ACE Connector package.
 
 This split lets most of the web application and acquisition logic be tested
 without physical hardware.
@@ -130,17 +131,20 @@ hardware-specific procedure. The completed manual should include verified
 recovery steps for at least camera communication, cooling, focus control,
 guide/telescope telemetry, failed FITS writes, and interrupted exposures.
 
-ACE compatibility bridge
-------------------------
+ACE Alpaca bridge
+-----------------
 
-Where the ACE vendor Python modules are restricted to the x86 observatory host,
-a small HTTP service can expose a fixed read-only subset of instrument state.
-The bridge is deliberately allow-listed: clients request known resources rather
-than arbitrary object names or Python expressions.
+Start the ACE Alpaca bridge on the TCS-side computer before enabling an ICS
+``alpaca`` backend. Confirm that Alpaca discovery reports Telescope 0, Focuser
+0, and Camera 0, then test only the devices required for that observing mode.
+The bridge provides explicit telescope, focus, and guide-camera control
+operations; it is not a generic ACE remote-execution service.
 
-The bridge is suitable for status and telemetry. Any control path should remain
-explicit and narrowly scoped; do not turn the read-only service into a generic
-RPC interface.
+The current bridge does not expose the guide-camera X/Y stage, while the ICS
+stage client expects separate Alpaca Focuser device numbers for its axes. Keep
+the ICS stage backend set to ``mock`` until that mapping is implemented and
+verified. Likewise, the current ICS guide-camera backend remains ``mock`` even
+though Camera 0 is available directly from the bridge.
 
 Operational caution
 -------------------

@@ -28,10 +28,11 @@ Control and data boundaries
 
 The ICS coordinates status and acquisition but does not replace the native
 device interfaces or make quick-look products authoritative. Raw FITS frames
-remain the hand-off between instrument operation and reduction. Telescope-side
-state may arrive through ACE Connector interfaces, while instrument-side
-devices such as the science camera and focus controller can use INDI-backed
-interfaces.
+remain the hand-off between instrument operation and reduction. Instrument-side
+devices such as the science camera and focus controller use INDI-backed
+interfaces. Telescope-side ACE devices are translated to ASCOM Alpaca by a
+bridge on the TCS computer, allowing the ICS host to use ordinary HTTP clients
+without the vendor ACE package.
 
 Scientific data flow
 --------------------
@@ -83,13 +84,16 @@ Hardware-control boundary
 -------------------------
 
 The ICS isolates device-specific interfaces behind backend objects. Development
-can use mock devices, while the instrument-side deployment can use INDI for the
-science camera/focus hardware and ACE Connector-backed interfaces for telescope
-and guide-side devices.
+can use mock devices, while deployment can use INDI for the science camera and
+camera-lens controller and Alpyca clients for telescope-side devices.
 
-A separate read-only ACE bridge is useful where the vendor Python bindings only
-run on a particular x86 Python installation. That bridge should be treated as a
-narrow compatibility service, not as a general remote-execution API.
+The ACE Alpaca bridge is a separate TCS-hosted service. It owns the vendor
+bindings, ACE credentials, and ACE device names; the ICS owns the Alpaca network
+address and device-number mapping. The bridge supports telescope pointing and
+slewing, telescope focus, and guide-camera acquisition. Guide-stage X/Y motion
+is not yet exposed by the bridge, although the ICS contains an Alpaca stage
+client. Treat this as an integration boundary that must be verified before
+deployment, not as a generic remote-execution API.
 
 Configuration ownership
 -----------------------

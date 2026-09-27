@@ -32,10 +32,23 @@ names are ``FLI Aurora`` and ``Pinefeat CEF``; the observer interface can select
 different devices discovered on the configured INDI server without restarting
 the ICS.
 
-The ``[backends]`` section of ``config.ini`` selects ``mock`` or ``ace``
-implementations independently for ``tcs``, ``guide_camera``, and ``stage``.
-When the stage backend is ``ace``, the configured X, Y, and optional focus/Z
-axis names determine which axes are exposed.
+The ``[backends]`` section of ``config.ini`` selects ``mock`` or ``alpaca``
+implementations for ``tcs`` and ``stage``. The Alpaca clients communicate with
+the :doc:`ace-bridge` on the telescope-control-system (TCS) computer; the ICS
+host therefore does not install the vendor ACE Connector package or store its
+credentials. ``[alpaca]`` configures the bridge host, port, protocol, and
+device-number mapping.
+
+The guide-camera backend remains ``mock`` in the current ICS. The bridge now
+advertises the guide/acquisition camera as Alpaca Camera 0, but the corresponding
+ICS client is not yet implemented.
+
+.. warning::
+
+   The current bridge advertises one Focuser (the telescope focus mechanism) and
+   does not yet advertise the X/Y guide stage. The ICS ``alpaca`` stage backend
+   expects X, Y, and optionally focus/Z Focuser device numbers. Do not enable it
+   until the bridge device mapping and installed hardware have been verified.
 
 The factory layer builds the concrete backend objects from these settings,
 which keeps the rest of the application independent of the vendor interface.
@@ -45,8 +58,10 @@ Web application
 
 The Flask application exposes acquisition/status endpoints and the observer UI.
 Completed science FITS files can be served to the UI for direct JS9 display.
-This keeps the preview faithful to the detector data and permits normal FITS
-inspection tools in the browser.
+The current loader explicitly requests the full detector dimensions with no
+JS9 display binning, preventing the browser from cropping or resampling the
+preview. This keeps the preview faithful to the detector data and permits
+normal FITS inspection tools in the browser.
 
 Configuration
 -------------
@@ -60,7 +75,7 @@ deployments. Relative ``data_root`` paths are resolved relative to the
 configuration file rather than the process working directory.
 
 The file groups settings into ``[server]``, ``[instrument]``, ``[js9]``,
-``[indi]``, ``[backends]``, and ``[ace]`` sections. It is the authoritative
+``[indi]``, ``[backends]``, and ``[alpaca]`` sections. It is the authoritative
 inventory of supported options and defaults. Instrument geometry and component
 names configured there are written into acquired FITS headers, so they must
 match the hardware actually in use.

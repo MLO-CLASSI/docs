@@ -1,45 +1,65 @@
-ACE read-only bridge
-====================
+ACE Alpaca bridge
+=================
 
 Purpose
 -------
 
-The ACE read-only bridge is a compatibility service for deployments where the
-vendor ACE Connector Python modules are only usable on the observatory x86 host.
-It exposes selected state over a small HTTP API so another machine can consume
-telemetry without loading the vendor extension modules.
+The ACE Alpaca bridge is the compatibility service between the observatory's
+ACE telescope-control system and network clients such as the CLASSI ICS. It runs
+on the TCS-side computer, where the vendor ACE Connector Python modules are
+available, and exposes a fixed set of devices through the standard ASCOM Alpaca
+HTTP/JSON protocol.
 
-Security model
---------------
+The ICS uses Alpyca clients and does not import ACE Connector directly. ACE node
+names, credentials, and vendor-specific configuration remain on the TCS
+computer.
 
-The bridge is intentionally not a generic RPC server. Requests cannot provide a
-Python expression, arbitrary ACE attribute name, or arbitrary method name.
-Only fixed, allow-listed reads are exposed.
+Current device mapping
+----------------------
 
-Only ``GET``, ``HEAD``, and ``OPTIONS`` are accepted. State-changing HTTP verbs
-are rejected before device lookup.
+The current bridge advertises:
 
-HTTP resources
---------------
+* Telescope 0 for J2000 position, target, asynchronous slews, and an ``Offset``
+  custom action;
+* Focuser 0 for the telescope focus mechanism, including position, motion,
+  halt, and a ``Home`` custom action; and
+* Camera 0 for the CLASSI guide/acquisition camera.
 
-The service provides an unauthenticated health endpoint plus authenticated
-resource/snapshot endpoints:
+Camera exposures run in a worker thread. The bridge watches the configured ACE
+archive directory for the resulting FITS file and returns its pixels through
+Alpaca ``ImageArray``. Subframes are not implemented, and the camera-specific
+limits and installed sensor geometry still require on-telescope verification.
 
-.. code-block:: text
+The ACE ``XYStage`` interface is not currently advertised because its motion
+and position API has not yet been verified. This differs from the ICS's current
+three-Focuser assumption for X, Y, and optional focus/Z stage axes; see
+:doc:`ics` before enabling the stage backend.
 
-   GET /healthz
-   GET /v1
-   GET /v1/health
-   GET /v1/devices
-   GET /v1/devices/<id>
-   GET /v1/snapshot
+Installation and configuration
+------------------------------
 
-A partial ACE read failure is reported for the affected field rather than
-causing the service to guess another call or invoke a state-changing method.
+Install the Python requirements in an environment that can import the
+vendor-supplied ``ace`` modules, then run ``device/app.py`` on the TCS computer.
+The service listens on TCP port 5555 by default and supports standard Alpaca UDP
+discovery.
 
-Deployment note
----------------
+The repository's
+`README <https://github.com/MLO-CLASSI/ace-alpaca-bridge/blob/master/README.md>`_
+and
+`device/config.toml <https://github.com/MLO-CLASSI/ace-alpaca-bridge/blob/master/device/config.toml>`_
+are the authoritative setup and configuration references. The repository is
+private and these links require MLO-CLASSI access. Installation-specific values
+can be placed in ``/alpyca/config.toml`` so credentials and local overrides do
+not need to be committed.
 
-The first-cut service uses ordinary HTTP. Restrict it to the observatory/private
-network and use an appropriate protected transport or tunnel if traffic crosses
-an untrusted network. The bearer token is not encryption.
+Security and protocol boundary
+------------------------------
+
+The bridge is intentionally not a generic RPC server. It translates a fixed set
+of Alpaca operations into fixed ACE calls; requests cannot provide a Python
+expression or arbitrary ACE attribute or method name.
+
+The default deployment uses ordinary HTTP. Restrict it to the observatory or
+another trusted private network, and use protected transport if traffic must
+cross an untrusted network. Validate the bridge with ASCOM ConformU and verify
+real hardware limits before unattended operation.

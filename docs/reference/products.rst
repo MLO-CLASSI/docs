@@ -21,8 +21,9 @@ file-metadata sections. Important conventions are:
   deployment's ``config.ini``.
 * ``DETECTOR`` and ``PIXSIZE`` describe the unbinned sensor. ``BINX``, ``BINY``,
   and ``BINNING`` record the active binning; camera-provided binning and pixel-
-  size cards are retained when present. ``GAIN``, ``GAINMODE``, ``CCD-TEMP``,
-  and ``TECPOWER`` describe the readout and thermal state.
+  size cards are retained when present. ``GAIN`` and ``GAINMODE`` describe the
+  readout state; ``SET-TEMP``, ``CCD-TEMP``, and ``TECPOWER`` record the sensor
+  setpoint, measured temperature, and cooler power.
 * ``RA`` and ``DEC`` are sexagesimal target coordinates. ``RA_OBJ`` and
   ``DEC_OBJ`` contain the same target position in decimal degrees, while
   ``RA_TEL`` and ``DEC_TEL`` record the actual telescope pointing. ``AIRMASS``

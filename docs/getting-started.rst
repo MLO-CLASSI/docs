@@ -52,6 +52,10 @@ shared calibration/reference files from being copied into every repository.
    * - ``ics`` / ``classi-ics`` / ``ics``
      - Operate and monitor the science camera, camera-lens focus, telescope-side
        guide hardware, and related observatory interfaces.
+   * - ``ace-alpaca-bridge`` / deployment service
+     - Translate the TCS-hosted ACE telescope, focus, and guide-camera interfaces
+       into ASCOM Alpaca for the ICS and other network clients. The private
+       repository requires MLO-CLASSI access.
 
 Environment strategy
 --------------------
@@ -67,6 +71,7 @@ A typical checkout can look like this:
    ├── pipeline/
    ├── shared-data/
    ├── ics/
+   ├── ace-alpaca-bridge/
    └── docs/
 
 Create a virtual environment and install the packages you need. Package metadata

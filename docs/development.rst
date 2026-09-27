@@ -6,8 +6,9 @@ Repository boundaries
 
 Keep broadly reusable science logic independent of observatory hardware. The
 ETC, simulator, pipeline, and shared-data repositories should remain usable on a
-normal scientific Python installation. Hardware-specific INDI/ACE integration
-belongs in the ICS or a narrowly scoped adapter/service.
+normal scientific Python installation. Hardware-specific INDI/Alpaca
+integration belongs in the ICS, while the vendor ACE integration belongs in the
+narrowly scoped TCS-side bridge.
 
 Shared data
 -----------
