@@ -26,8 +26,9 @@ The normal path through the instrument is:
 
       **2. Acquire**
 
-      Telescope |flow-arrow| fiber input |flow-arrow| collimator, filter, and
-      grating |flow-arrow| camera lens and detector |flow-arrow| raw FITS frames
+      Source |flow-arrow| Telescope |flow-arrow| fiber input |flow-arrow|
+      collimator, filter, and grating |flow-arrow| camera lens and detector
+      |flow-arrow| raw FITS frames
 
    .. container:: flow-stage
 
