@@ -102,12 +102,12 @@ calibration with its science frames.
 Focus and alignment checks
 --------------------------
 
-Do not treat a successful camera connection as evidence that the spectrograph
-is in focus or aligned. Use an appropriate continuum or line source to inspect
-trace width, separation, spectral-line width, and field dependence. Preserve
-the focus metric and controller position rather than relying only on a visual
-assessment. Recheck focus after meaningful temperature changes or any mechanical
-intervention.
+A successful camera connection should not be treated as evidence that the
+spectrograph is in focus or aligned. Use an appropriate continuum or line
+source to inspect trace width, separation, spectral-line width, and field
+dependence. Preserve the focus metric and controller position rather than
+relying only on a visual assessment. Recheck focus after meaningful temperature
+changes or any mechanical intervention.
 
 End of night
 ------------
@@ -125,30 +125,33 @@ Fault handling
 --------------
 
 If a device disconnects or telemetry becomes implausible, stop the affected
-operation and preserve the current data and log state. Do not repeatedly cycle
-power, move mechanisms, or reinitialize the camera without checking the
-hardware-specific procedure. The completed manual should include verified
-recovery steps for at least camera communication, cooling, focus control,
-guide/telescope telemetry, failed FITS writes, and interrupted exposures.
+operation and preserve the current data and log state. Power should not be
+repeatedly cycled, and mechanisms or the camera should not be reinitialized,
+without first checking the hardware-specific procedure. The completed manual
+should include verified recovery steps for at least camera communication,
+cooling, focus control, guide/telescope telemetry, failed FITS writes, and
+interrupted exposures.
 
 ACE Alpaca bridge
 -----------------
 
-Start the ACE Alpaca bridge on the TCS-side computer before enabling an ICS
-``alpaca`` backend. Confirm that Alpaca discovery reports Telescope 0, Focuser
-0, and Camera 0, then test only the devices required for that observing mode.
+The ACE Alpaca bridge should be running on the TCS-side computer before the ICS
+``tcs`` or ``guide_camera`` backend is set to ``alpaca``. Confirm that Alpaca
+discovery reports Telescope 0, Focuser 0, and Camera 0, then test only the
+devices required for that observing mode.
 The bridge provides explicit telescope, focus, and guide-camera control
 operations; it is not a generic ACE remote-execution service.
 
-The current bridge does not expose the guide-camera X/Y stage, while the ICS
-stage client expects separate Alpaca Focuser device numbers for its axes. Keep
-the ICS stage backend set to ``mock`` until that mapping is implemented and
-verified. Likewise, the current ICS guide-camera backend remains ``mock`` even
-though Camera 0 is available directly from the bridge.
+The current bridge does not expose the guide-camera X/Y stage. The ICS supports
+only the mock stage backend and explicitly rejects ``stage = alpaca``; the
+setting should remain ``mock`` until the native stage has a verified network
+mapping. The guide/acquisition camera can independently use
+``guide_camera = alpaca`` with Camera 0.
 
 Operational caution
 -------------------
 
 Hardware configuration, device names, ports, and credentials are deployment
-configuration, not library defaults. Keep credentials out of the repository and
-use the deployment ``config.ini`` or the deployment system's secret management.
+configuration, not library defaults. Credentials should be kept out of the
+repository and supplied through the deployment ``config.ini`` or
+secret-management system.

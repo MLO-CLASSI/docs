@@ -91,14 +91,15 @@ The ACE Alpaca bridge is a separate TCS-hosted service. It owns the vendor
 bindings, ACE credentials, and ACE device names; the ICS owns the Alpaca network
 address and device-number mapping. The bridge supports telescope pointing and
 slewing, telescope focus, and guide-camera acquisition. Guide-stage X/Y motion
-is not yet exposed by the bridge, although the ICS contains an Alpaca stage
-client. Treat this as an integration boundary that must be verified before
-deployment, not as a generic remote-execution API.
+is not exposed by the bridge, and the ICS currently rejects an ``alpaca`` stage
+configuration rather than treating the telescope Focuser as a stage axis. A
+network stage interface should be implemented and verified on both sides before
+deployment; the bridge should not be treated as a generic remote-execution API.
 
 Configuration ownership
 -----------------------
 
-Avoid maintaining the same instrument constant independently in several
+The same instrument constant should not be maintained independently in several
 packages. Shared reference curves belong in ``classi-shared-data``; physical
 geometry belongs in the simulator's instrument model; observing-host addresses,
 device names, and credentials belong in deployment configuration; and

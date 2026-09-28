@@ -67,5 +67,5 @@ Put data here when multiple spectrograph packages need the same authoritative
 file: detector QE curves, grating-efficiency curves, fiber attenuation,
 atmospheric extinction, and common reference spectra are typical examples.
 
-Do not put generated observation products or user-specific calibration data in
-this package.
+Generated observation products and user-specific calibration data should not be
+put in this package.

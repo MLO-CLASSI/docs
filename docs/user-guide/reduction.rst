@@ -26,8 +26,8 @@ CCD-style data containers so the data array, uncertainty, mask, and unit can
 remain associated throughout processing.
 
 When a masked pixel contributes no valid information to an extraction, the
-output uncertainty/mask should communicate that fact. Avoid silently replacing
-invalid measurements with apparently valid numerical values.
+output uncertainty/mask should communicate that fact. The pipeline should not
+silently replace invalid measurements with apparently valid numerical values.
 
 Trace extraction
 ----------------

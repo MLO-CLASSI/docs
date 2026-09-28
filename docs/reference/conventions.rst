@@ -57,14 +57,14 @@ calculator.
 Wavelength direction
 --------------------
 
-Do not infer whether wavelength increases toward larger or smaller detector
-``x`` from the sign of a hand-entered dispersion. The physical simulator has an
-explicit ``wavelength_increases_with_x`` choice and computes the wavelength
-mapping from the grating geometry.
+Whether wavelength increases toward larger or smaller detector ``x`` should not
+be inferred from the sign of a hand-entered dispersion. The physical simulator
+has an explicit ``wavelength_increases_with_x`` choice and computes the
+wavelength mapping from the grating geometry.
 
 Masks
 -----
 
-Masks indicate data that should not contribute as valid measurements. Do not
-use ``NaN`` as a substitute for a mask when the underlying CCD container already
-supports a mask and uncertainty.
+Masks indicate data that should not contribute as valid measurements. ``NaN``
+should not be used as a substitute for a mask when the underlying CCD container
+already supports a mask and uncertainty.

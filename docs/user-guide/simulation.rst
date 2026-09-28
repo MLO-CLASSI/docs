@@ -20,11 +20,12 @@ Detector sampling
 -----------------
 
 Input spectra can be more coarsely sampled than the detector dispersion. Before
-rendering, the simulator inserts a sufficiently fine wavelength grid and
-linearly interpolates each spectrum onto it while preserving the original
-samples as interpolation breakpoints. This prevents gaps in traces that would
-otherwise appear when sparse spectral samples are deposited directly on the
-detector.
+rendering, the simulator maps the supplied wavelengths to detector ``x``. If
+adjacent samples are farther apart than ``render_sampling_px``, it constructs a
+uniform detector-coordinate grid, maps that grid back to wavelength, and
+linearly interpolates each spectrum while preserving the original samples as
+breakpoints. This follows the nonlinear grating mapping across the detector and
+prevents gaps in traces from sparsely sampled input spectra.
 
 Optical geometry
 ----------------
@@ -50,12 +51,15 @@ For each wavelength sample and fiber, the simulator:
 
 #. multiplies the source flux by collecting area and the combined throughput;
 #. converts energy flux to expected photoelectrons;
+#. applies the scalar or per-fiber coupling efficiency;
 #. maps wavelength to detector ``x`` through the grating geometry;
 #. maps the fiber to the appropriate detector ``y`` trace;
 #. deposits the counts with a two-dimensional Gaussian kernel; and
 #. optionally applies a vignetting map.
 
-The detector model can then add Poisson noise, dark current, read noise, full
-well clipping, gain conversion, and bias to return an ADU image.
+The detector model combines source and dark-current charge, applies Poisson
+noise, clips accumulated charge at full well, then adds read noise before gain
+conversion and bias. Read noise is therefore not clipped by the physical
+full-well capacity.
 
 Use a fixed random seed when producing regression fixtures for the pipeline.

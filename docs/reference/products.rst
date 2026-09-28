@@ -4,8 +4,9 @@ Data products
 Raw detector frames
 -------------------
 
-Raw FITS files from the ICS are the authoritative acquisition products. Keep
-all original headers and do not overwrite the raw files during reduction.
+Raw FITS files from the ICS are the authoritative acquisition products. All
+original headers should be retained, and raw files should not be overwritten
+during reduction.
 
 ICS header conventions
 ----------------------
@@ -19,11 +20,14 @@ file-metadata sections. Important conventions are:
 * ``CAMERAFL``, ``COLLIMFL``, ``NGROOVES``, ``GRATING``, ``FILTER``, and
   ``DISPERS`` record the configured optical setup. These values come from the
   deployment's ``config.ini``.
-* ``DETECTOR`` and ``PIXSIZE`` describe the unbinned sensor. ``BINX``, ``BINY``,
-  and ``BINNING`` record the active binning; camera-provided binning and pixel-
-  size cards are retained when present. ``GAIN`` and ``GAINMODE`` describe the
-  readout state; ``SET-TEMP``, ``CCD-TEMP``, and ``TECPOWER`` record the sensor
-  setpoint, measured temperature, and cooler power.
+* ``DETECTOR`` identifies the sensor. Camera-provided ``PIXSIZE1`` and
+  ``PIXSIZE2`` cards are retained when present; the ICS does not synthesize the
+  former generic ``PIXSIZE`` card. ``BINNING`` records the requested setting,
+  while camera-provided ``XBINNING``, ``YBINNING``, ``XPIXSZ``, and ``YPIXSZ``
+  cards preserve the reported detector state. The ICS no longer adds parallel
+  ``BINX`` or ``BINY`` cards. ``GAIN`` and ``GAINMODE`` describe the readout
+  state; ``SET-TEMP``, ``CCD-TEMP``, and ``TECPOWER`` record the sensor setpoint,
+  measured temperature, and cooler power.
 * ``RA`` and ``DEC`` are sexagesimal target coordinates. ``RA_OBJ`` and
   ``DEC_OBJ`` contain the same target position in decimal degrees, while
   ``RA_TEL`` and ``DEC_TEL`` record the actual telescope pointing. ``AIRMASS``
@@ -37,9 +41,9 @@ file-metadata sections. Important conventions are:
   ``DATE-END``, and ``SIDEREAL`` describe exposure timing. ``FILENAME`` and
   ``DATE`` identify the written product and its last modification time.
 
-Do not infer a requested exposure from ``EXPTIME`` when ``REQEXPT`` is present,
-and do not substitute target coordinates for the separately recorded telescope
-pointing.
+The requested exposure should not be inferred from ``EXPTIME`` when ``REQEXPT``
+is present, and target coordinates should not be substituted for the separately
+recorded telescope pointing.
 
 Calibrated detector frames
 --------------------------

@@ -24,6 +24,14 @@ Core objects
    optional full-well level. ``apply_noise`` converts an ideal electron image
    into a noisy ADU image.
 
+   Reusable ``FLI_KL400``, ``FLI_AR571``, and ``QHY_268M`` detector models are
+   defined in ``simulator.components.cameras``. The top-level
+   ``simulator.DetectorModel`` import remains available for custom models. The
+   repository example notebook now uses ``FLI_AR571`` for the current Aurora
+   baseline. That preset currently leaves ``gain`` unspecified and therefore
+   inherits the generic 1 e⁻/ADU default; a measured value for the deployed
+   readout mode should be supplied before quantitative use.
+
 ``SpectrographModel``
    Physical optical geometry. It derives central wavelength, dispersion,
    magnification, anamorphic factor, projected fiber pitch, and spatial/spectral
@@ -78,3 +86,8 @@ For ``fiber_count > 1``, ``flux_density`` must contain one spectrum per fiber.
 The current linear-bundle use case therefore supplies an array shaped
 ``(fiber_count, n_wavelength)``. The simulator projects the physical fiber pitch
 to the detector automatically.
+
+``render_electrons`` and ``simulate`` accept ``fiber_coupling_efficiency`` as
+either one dimensionless fraction for every fiber or one fraction per fiber.
+Every value must lie between 0 and 1; the factor scales the expected source
+electrons before the traces are deposited on the detector. The default is 1.0.

@@ -31,9 +31,10 @@ Alpaca ``ImageArray``. Subframes are not implemented, and the camera-specific
 limits and installed sensor geometry still require on-telescope verification.
 
 The ACE ``XYStage`` interface is not currently advertised because its motion
-and position API has not yet been verified. This differs from the ICS's current
-three-Focuser assumption for X, Y, and optional focus/Z stage axes; see
-:doc:`ics` before enabling the stage backend.
+and position API has not yet been verified. The ICS therefore implements only
+the mock stage backend and rejects ``stage = alpaca``. That setting should
+remain ``mock`` until a network interface for the native stage is implemented
+and verified on both sides.
 
 Installation and configuration
 ------------------------------

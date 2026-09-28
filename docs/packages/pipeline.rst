@@ -29,6 +29,14 @@ The L1 ``--unit`` option supplies the science-image unit when ``BUNIT`` is
 absent or overrides the header value when explicitly supplied. It defaults to
 ``adu``.
 
+The command reads one science-image extension selected with ``--data-ext``. It
+does not assume that the Level-0 file contains separate variance or mask
+extensions. When the loaded image has no uncertainty, both ``--gain`` and
+``--read-noise`` are required to construct the variance model. Library callers
+can instead pass a ``CCDData`` object that already carries its uncertainty and
+mask. ``--cal-data-ext`` independently selects the image extension used for
+bias, dark, and flat masters.
+
 ``--rebin N`` sums groups of ``N`` adjacent dispersion pixels in each output
 spectrum; the default of 1 preserves the native sampling. Counts are summed,
 uncertainties are combined in quadrature, and the output ``PIXEL`` coordinate
@@ -86,6 +94,8 @@ must not contribute as a valid measurement.
 Propagated variance should include the appropriate detector noise terms and
 remain consistent with the CCD data unit. It is retained in the Level-1
 products and will also support optimal extraction when that path is selected.
+The current command-line variance model includes Poisson and read-noise terms;
+uncertainty from the master calibration frames is not yet included.
 
 Per-fiber outputs
 -----------------
