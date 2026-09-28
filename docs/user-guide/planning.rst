@@ -23,7 +23,7 @@ are in the observer frame, together with:
 * either a target AB magnitude and LSST band for a forward S/N calculation, or
   a target S/N and LSST band for a limiting-magnitude calculation.
 
-The ETC currently supports scaling a template spectrum to LSST ``g``, ``r``,
+The ETC supports scaling a template spectrum to LSST ``g``, ``r``,
 or ``i`` photometry in the AB system. This is useful when the spectral
 shape is known or assumed but only broadband target photometry is available.
 For a limiting-magnitude calculation, the template still supplies the spectral

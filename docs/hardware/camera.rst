@@ -1,11 +1,10 @@
 Camera: FLI Aurora AR571
 ========================
 
-The current modeled science-camera baseline and ETC default is the FLI Aurora
-``AR571``, which uses a Sony ``IMX571`` CMOS sensor. The sensor format and pixel
-size are central inputs to the simulator, ETC, and pipeline geometry. Other
-camera models, including the earlier Kepler configuration, remain selectable
-in the ETC for comparison.
+The FLI Aurora ``AR571``, which uses a Sony ``IMX571`` CMOS sensor, is the
+modeled science-camera baseline and ETC default. The sensor format and pixel
+size are central inputs to the simulator, ETC, and pipeline geometry. The ETC
+also supports other camera models for comparison.
 
 .. list-table:: Key catalog and configured properties
    :header-rows: 1
@@ -39,7 +38,7 @@ in the ETC for comparison.
      - 7 frames s⁻¹
 
 Read noise, dark current, frame rate, full well, and cooling performance depend
-on readout and operating mode. The ETC currently models 1 e⁻ read noise and
+on readout and operating mode. The ETC models 1 e⁻ read noise and
 0.002 e⁻ pixel⁻¹ s⁻¹ dark current at -20 °C.
 
 Vendor resources

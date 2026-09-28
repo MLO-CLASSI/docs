@@ -26,14 +26,14 @@ The light and data paths are:
         -> camera lens -> science detector -> raw FITS exposure
         -> calibration and extraction -> one-dimensional spectra
 
-The principal spectrograph components currently documented are:
+The principal spectrograph components are:
 
 .. list-table:: Principal optical and detector components
    :header-rows: 1
    :widths: 28 32 40
 
    * - Subsystem
-     - Current component
+     - Component
      - System role
    * - Fiber feed
      - Thorlabs FG105LVA, 105 µm core

@@ -25,12 +25,11 @@ Core objects
    into a noisy ADU image.
 
    Reusable ``FLI_KL400``, ``FLI_AR571``, and ``QHY_268M`` detector models are
-   defined in ``simulator.components.cameras``. The top-level
-   ``simulator.DetectorModel`` import remains available for custom models. The
-   repository example notebook now uses ``FLI_AR571`` for the current Aurora
-   baseline. That preset currently leaves ``gain`` unspecified and therefore
-   inherits the generic 1 e⁻/ADU default; a measured value for the deployed
-   readout mode should be supplied before quantitative use.
+   defined in ``simulator.components.cameras``. Custom models can import
+   ``DetectorModel`` from ``simulator``. The repository example notebook uses
+   ``FLI_AR571`` for the Aurora baseline. That preset leaves ``gain`` unspecified
+   and therefore inherits the generic 1 e⁻/ADU default; a measured value for the
+   deployed readout mode should be supplied before quantitative use.
 
 ``SpectrographModel``
    Physical optical geometry. It derives central wavelength, dispersion,
@@ -83,7 +82,7 @@ Multi-fiber spectra
 -------------------
 
 For ``fiber_count > 1``, ``flux_density`` must contain one spectrum per fiber.
-The current linear-bundle use case therefore supplies an array shaped
+CLASSI's linear bundle therefore uses an array shaped
 ``(fiber_count, n_wavelength)``. The simulator projects the physical fiber pitch
 to the detector automatically.
 

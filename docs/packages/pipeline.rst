@@ -29,9 +29,8 @@ The L1 ``--unit`` option supplies the science-image unit when ``BUNIT`` is
 absent or overrides the header value when explicitly supplied. It defaults to
 ``adu``.
 
-The command reads one science-image extension selected with ``--data-ext``. It
-does not assume that the Level-0 file contains separate variance or mask
-extensions. When the loaded image has no uncertainty, both ``--gain`` and
+The command reads the science image from the extension selected with
+``--data-ext``. When the loaded image has no uncertainty, both ``--gain`` and
 ``--read-noise`` are required to construct the variance model. Library callers
 can instead pass a ``CCDData`` object that already carries its uncertainty and
 mask. ``--cal-data-ext`` independently selects the image extension used for
@@ -52,21 +51,19 @@ requested rebinning.
 Processing levels
 -----------------
 
-The current code separates detector/image handling from the Level-1 spectral
-extraction. A typical instrument-specific script reads a FITS frame into a
-CCD-style object, locates or supplies the trace centers, and calls the generic
-Level-1 processing routines. Level 2 is currently a placeholder and does not
-yet perform wavelength or spectrophotometric calibration.
+The code separates detector/image handling from the Level-1 spectral extraction.
+A typical instrument-specific script reads a FITS frame into a CCD-style object,
+locates or supplies the trace centers, and calls the generic Level-1 processing
+routines. Level 2 is a placeholder and does not perform wavelength or
+spectrophotometric calibration.
 
 Primary extraction interface
 ----------------------------
 
 ``process_l1(...)`` is the main entry point used by instrument-specific
 extraction scripts. Its extraction configuration includes trace centers,
-extraction half-width, detector gain, and read noise. The function currently
-uses boxcar extraction for the requested traces and returns one spectrum per
-trace. Horne/optimal-extraction code is present, but ``process_l1()`` does not
-currently select it.
+extraction half-width, detector gain, and read noise. The function uses boxcar
+extraction for the requested traces and returns one spectrum per trace.
 
 A representative pattern is:
 
@@ -93,9 +90,8 @@ must not contribute as a valid measurement.
 
 Propagated variance should include the appropriate detector noise terms and
 remain consistent with the CCD data unit. It is retained in the Level-1
-products and will also support optimal extraction when that path is selected.
-The current command-line variance model includes Poisson and read-noise terms;
-uncertainty from the master calibration frames is not yet included.
+products. The command-line variance model includes Poisson and read-noise terms
+but excludes uncertainty from the master calibration frames.
 
 Per-fiber outputs
 -----------------

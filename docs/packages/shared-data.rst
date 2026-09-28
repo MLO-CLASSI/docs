@@ -12,7 +12,7 @@ private copy of the same curves.
 Package layout
 --------------
 
-The current distribution contains two top-level data directories:
+The distribution contains two top-level data directories:
 
 .. code-block:: text
 

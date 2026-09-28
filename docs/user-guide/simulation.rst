@@ -2,7 +2,7 @@ Simulating detector data
 ========================
 
 The simulator converts one or more input spectra into a synthetic detector
-image. Its current model is unit-aware through Astropy quantities and computes
+image. Its model is unit-aware through Astropy quantities and computes
 important detector-space quantities from the physical spectrograph geometry.
 
 Inputs and units

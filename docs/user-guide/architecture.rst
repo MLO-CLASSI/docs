@@ -46,18 +46,17 @@ The software supporting that physical system has three layers:
 
 The ``classi-shared-data`` distribution (imported as ``shared_data``) is
 the common reference-data dependency at the bottom of the scientific stack.
-The ETC also reuses the physical and throughput models from
-``classi-sim`` instead of maintaining a parallel implementation. Together
-these dependencies prevent the ETC and simulator from silently diverging.
+The ETC imports the physical and throughput models from ``classi-sim``, keeping
+the ETC and simulator consistent.
 
 Instrument model
 ----------------
 
-The current simulator describes the spectrograph from physical inputs rather
-than asking callers to enter derived detector quantities. Important inputs
-include detector pixel size, grating groove density, incidence and diffraction
-angles, collimator and camera focal lengths, fiber core diameter, fiber pitch,
-and diffraction order.
+The simulator describes the spectrograph from physical inputs rather than asking
+callers to enter derived detector quantities. Important inputs include detector
+pixel size, grating groove density, incidence and diffraction angles, collimator
+and camera focal lengths, fiber core diameter, fiber pitch, and diffraction
+order.
 
 From these, the model derives quantities such as:
 
@@ -91,10 +90,11 @@ The ACE Alpaca bridge is a separate TCS-hosted service. It owns the vendor
 bindings, ACE credentials, and ACE device names; the ICS owns the Alpaca network
 address and device-number mapping. The bridge supports telescope pointing and
 slewing, telescope focus, and guide-camera acquisition. Guide-stage X/Y motion
-is not exposed by the bridge, and the ICS currently rejects an ``alpaca`` stage
-configuration rather than treating the telescope Focuser as a stage axis. A
-network stage interface should be implemented and verified on both sides before
-deployment; the bridge should not be treated as a generic remote-execution API.
+is not exposed by the bridge, and the ICS rejects an ``alpaca`` stage
+configuration. Telescope Focuser 0 represents telescope focus, not a stage
+axis. A network stage interface should be implemented and verified on both
+sides before deployment; the bridge should not be treated as a generic
+remote-execution API.
 
 Configuration ownership
 -----------------------

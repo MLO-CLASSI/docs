@@ -40,9 +40,7 @@ After acquisition
 #. Process the detector calibrations.
 #. Review the raw-frame metadata and observing log before assigning calibrations
    or combining exposures.
-#. Trace and boxcar-extract every useful fiber with the current Level-1 path;
-   use Horne/optimal extraction only when explicitly selecting that available
-   implementation.
+#. Trace and boxcar-extract every useful fiber with Level 1.
 #. Apply wavelength calibration and propagate masks and uncertainties.
 #. Perform sky/background subtraction at a stage that preserves the individual
    fiber measurements needed for quality control.

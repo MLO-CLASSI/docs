@@ -14,10 +14,10 @@ The ICS uses Alpyca clients and does not import ACE Connector directly. ACE node
 names, credentials, and vendor-specific configuration remain on the TCS
 computer.
 
-Current device mapping
-----------------------
+Device mapping
+--------------
 
-The current bridge advertises:
+The bridge advertises:
 
 * Telescope 0 for J2000 position, target, asynchronous slews, and an ``Offset``
   custom action;
@@ -30,11 +30,11 @@ archive directory for the resulting FITS file and returns its pixels through
 Alpaca ``ImageArray``. Subframes are not implemented, and the camera-specific
 limits and installed sensor geometry still require on-telescope verification.
 
-The ACE ``XYStage`` interface is not currently advertised because its motion
-and position API has not yet been verified. The ICS therefore implements only
-the mock stage backend and rejects ``stage = alpaca``. That setting should
-remain ``mock`` until a network interface for the native stage is implemented
-and verified on both sides.
+The ACE ``XYStage`` interface is not advertised because its motion and position
+API has not been verified. The ICS therefore implements only the mock stage
+backend and rejects ``stage = alpaca``. That setting should remain ``mock``
+until a network interface for the native stage is implemented and verified on
+both sides.
 
 Installation and configuration
 ------------------------------

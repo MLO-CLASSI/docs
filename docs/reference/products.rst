@@ -20,14 +20,12 @@ file-metadata sections. Important conventions are:
 * ``CAMERAFL``, ``COLLIMFL``, ``NGROOVES``, ``GRATING``, ``FILTER``, and
   ``DISPERS`` record the configured optical setup. These values come from the
   deployment's ``config.ini``.
-* ``DETECTOR`` identifies the sensor. Camera-provided ``PIXSIZE1`` and
-  ``PIXSIZE2`` cards are retained when present; the ICS does not synthesize the
-  former generic ``PIXSIZE`` card. ``BINNING`` records the requested setting,
-  while camera-provided ``XBINNING``, ``YBINNING``, ``XPIXSZ``, and ``YPIXSZ``
-  cards preserve the reported detector state. The ICS no longer adds parallel
-  ``BINX`` or ``BINY`` cards. ``GAIN`` and ``GAINMODE`` describe the readout
-  state; ``SET-TEMP``, ``CCD-TEMP``, and ``TECPOWER`` record the sensor setpoint,
-  measured temperature, and cooler power.
+* ``DETECTOR`` identifies the sensor. ``BINNING`` records the requested setting,
+  while camera-provided ``PIXSIZE1``, ``PIXSIZE2``, ``XBINNING``, ``YBINNING``,
+  ``XPIXSZ``, and ``YPIXSZ`` cards preserve the reported detector state when
+  present. ``GAIN`` and ``GAINMODE`` describe the readout state; ``SET-TEMP``,
+  ``CCD-TEMP``, and ``TECPOWER`` record the sensor setpoint, measured
+  temperature, and cooler power.
 * ``RA`` and ``DEC`` are sexagesimal target coordinates. ``RA_OBJ`` and
   ``DEC_OBJ`` contain the same target position in decimal degrees, while
   ``RA_TEL`` and ``DEC_TEL`` record the actual telescope pointing. ``AIRMASS``
@@ -59,18 +57,17 @@ The pipeline should retain one product per extracted fiber through the low-level
 processing stages. A final science product can then associate fiber spectra with
 roles or spatial positions according to the observation metadata.
 
-The current L1 FITS product contains a primary HDU followed by one binary-table
-HDU per trace. Each trace table contains ``PIXEL``, ``COUNTS``, ``SIGMA``, and
-``MASK`` columns. ``PIXEL`` is the zero-based detector dispersion coordinate;
-for rebinned products it is the mean native coordinate of each contributing
-group. ``COUNTS`` is summed when rebinned and ``SIGMA`` is propagated in
-quadrature.
+The L1 FITS product contains a primary HDU followed by one binary-table HDU per
+trace. Each trace table contains ``PIXEL``, ``COUNTS``, ``SIGMA``, and ``MASK``
+columns. ``PIXEL`` is the zero-based detector dispersion coordinate; for
+rebinned products it is the mean native coordinate of each contributing group.
+``COUNTS`` is summed when rebinned and ``SIGMA`` is propagated in quadrature.
 
 The primary and trace headers record ``REBIN``, the number of native dispersion
 pixels per output bin. Each trace header also records ``NTRIM``, the number of
 trailing native pixels omitted because they did not form a complete bin, and
-``EXTRACT=BOXCAR`` for the current Level-1 extraction path. A rebinned sample is
-masked if any contributing native sample was masked.
+``EXTRACT=BOXCAR``. A rebinned sample is masked if any contributing native
+sample was masked.
 
 Simulation products
 -------------------

@@ -2,10 +2,8 @@ Operating the instrument
 ========================
 
 The instrument control system provides the observing interface while keeping
-hardware-specific details behind backend classes. This chapter is the framework
-for the CLASSI operator procedure; commissioning should replace the remaining
-configuration-dependent guidance with verified values, screenshots, and
-recovery steps.
+hardware-specific details behind backend classes. This chapter describes the
+general CLASSI operator workflow.
 
 Before the night
 ----------------
@@ -127,10 +125,10 @@ Fault handling
 If a device disconnects or telemetry becomes implausible, stop the affected
 operation and preserve the current data and log state. Power should not be
 repeatedly cycled, and mechanisms or the camera should not be reinitialized,
-without first checking the hardware-specific procedure. The completed manual
-should include verified recovery steps for at least camera communication,
-cooling, focus control, guide/telescope telemetry, failed FITS writes, and
-interrupted exposures.
+without first checking the hardware-specific procedure. Verified recovery
+procedures for camera communication, cooling, focus control, guide/telescope
+telemetry, failed FITS writes, and interrupted exposures are not yet documented
+here.
 
 ACE Alpaca bridge
 -----------------
@@ -142,7 +140,7 @@ devices required for that observing mode.
 The bridge provides explicit telescope, focus, and guide-camera control
 operations; it is not a generic ACE remote-execution service.
 
-The current bridge does not expose the guide-camera X/Y stage. The ICS supports
+The bridge does not expose the guide-camera X/Y stage. The ICS supports
 only the mock stage backend and explicitly rejects ``stage = alpaca``; the
 setting should remain ``mock`` until the native stage has a verified network
 mapping. The guide/acquisition camera can independently use

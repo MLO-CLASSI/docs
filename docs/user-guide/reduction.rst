@@ -34,10 +34,7 @@ Trace extraction
 
 The Level-1 extraction interface accepts known or measured trace centers and an
 extraction half-width, together with detector gain and read-noise information
-for uncertainty propagation. ``process_l1()`` currently performs boxcar
-extraction. Horne/optimal extraction is available in the codebase but is not
-currently selected by this Level-1 entry point; when enabled, it should use the
-propagated variance rather than treating all spatial pixels equally.
+for uncertainty propagation. ``process_l1()`` performs boxcar extraction.
 
 Output rebinning and quicklooks
 -------------------------------

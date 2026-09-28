@@ -38,7 +38,7 @@ with the :doc:`ace-bridge` on the telescope-control-system (TCS) computer; the
 ICS host therefore does not install the vendor ACE Connector package or store
 its credentials. ``[alpaca]`` configures the bridge host and port, telescope and
 camera device numbers, and guide-camera exposure timeout. The connection uses
-ordinary HTTP; there is no configurable ``protocol`` option.
+ordinary HTTP.
 
 The Alpaca acquisition-camera backend starts an exposure, polls ``ImageReady``,
 retrieves ``ImageArray``, converts the Alpaca X-major array to NumPy/FITS
@@ -47,11 +47,11 @@ retrieves ``ImageArray``, converts the Alpaca X-major array to NumPy/FITS
 
 .. warning::
 
-   The current bridge advertises one Focuser (the telescope focus mechanism) and
-   does not advertise the native X/Y guide stage. The ICS currently supports
-   only ``stage = mock`` and rejects ``stage = alpaca`` during backend creation.
-   The stage should remain on the mock backend until a verified network mapping
-   is implemented on both sides.
+   The bridge advertises one Focuser (the telescope focus mechanism) and does not
+   advertise the native X/Y guide stage. The ICS supports only ``stage = mock``
+   and rejects ``stage = alpaca`` during backend creation. The stage should
+   remain on the mock backend until a verified network mapping is implemented
+   on both sides.
 
 The factory layer builds the concrete backend objects from these settings,
 which keeps the rest of the application independent of the vendor interface.
@@ -61,10 +61,10 @@ Web application
 
 The Flask application exposes acquisition/status endpoints and the observer UI.
 Completed science FITS files can be served to the UI for direct JS9 display.
-The current loader explicitly requests the full detector dimensions with no
-JS9 display binning, preventing the browser from cropping or resampling the
-preview. This keeps the preview faithful to the detector data and permits
-normal FITS inspection tools in the browser.
+The loader requests the full detector dimensions with no JS9 display binning,
+preventing the browser from cropping or resampling the preview. This keeps the
+preview faithful to the detector data and permits normal FITS inspection tools
+in the browser.
 
 Configuration
 -------------

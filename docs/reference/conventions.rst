@@ -38,8 +38,8 @@ Array orientation
 
 Detector images follow NumPy convention ``image[y, x]`` with shape
 ``(ny, nx)``. The dispersion direction is represented by the detector ``x``
-coordinate in the current simulator, while the individual fiber traces are
-separated along ``y``.
+coordinate in the simulator, while the individual fiber traces are separated
+along ``y``.
 
 Spectral arrays
 ---------------
