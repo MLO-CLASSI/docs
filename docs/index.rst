@@ -34,7 +34,8 @@ The normal path through the instrument is:
 
       **3. Reduce**
 
-      Raw FITS frames |flow-arrow| reduction pipeline |flow-arrow| calibrated
+      Raw FITS frames |flow-arrow| trace extraction |flow-arrow| wavelength
+      calibration |flow-arrow| flux calibration |flow-arrow| calibrated
       spectra
 
 .. |flow-arrow| unicode:: U+2192
