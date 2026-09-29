@@ -19,6 +19,13 @@ each row can contain a different spectrum.
 Detector sampling
 -----------------
 
+The detector model can represent square binning. Its image dimensions, pixel
+size, dispersion per output pixel, and projected trace dimensions reflect the
+configured binned sampling. The Aurora preset uses 2×2 binning, producing a
+3122 × 2084 image whose samples span 7.52 µm on the native detector. Native
+detector properties remain available through the model's ``native_*``
+attributes.
+
 Input spectra can be more coarsely sampled than the detector dispersion. Before
 rendering, the simulator maps the supplied wavelengths to detector ``x``. If
 adjacent samples are farther apart than ``render_sampling_px``, it constructs a

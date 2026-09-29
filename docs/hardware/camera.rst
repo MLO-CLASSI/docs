@@ -41,6 +41,11 @@ Read noise, dark current, frame rate, full well, and cooling performance depend
 on readout and operating mode. The ETC models 1 e⁻ read noise and
 0.002 e⁻ pixel⁻¹ s⁻¹ dark current at -20 °C.
 
+The table gives native-sensor properties. The simulator's ``FLI_AR571`` preset
+represents 2×2-binned operation: 3122 × 2084 output samples with an effective
+7.52 µm sampling. The simulator scales per-output-sample dark current, read
+noise, and full well according to its square-binning model.
+
 Vendor resources
 ----------------
 

@@ -21,15 +21,17 @@ Core objects
 
 ``DetectorModel``
    Detector dimensions, pixel size, gain, read noise, dark current, bias, and
-   optional full-well level. ``apply_noise`` converts an ideal electron image
-   into a noisy ADU image.
+   optional full-well level, together with an integer square-binning factor.
+   ``apply_noise`` converts an ideal electron image into a noisy ADU image.
 
    Reusable ``FLI_KL400``, ``FLI_AR571``, and ``QHY_268M`` detector models are
    defined in ``simulator.components.cameras``. Custom models can import
    ``DetectorModel`` from ``simulator``. The repository example notebook uses
-   ``FLI_AR571`` for the Aurora baseline. That preset leaves ``gain`` unspecified
-   and therefore inherits the generic 1 e⁻/ADU default; a measured value for the
-   deployed readout mode should be supplied before quantitative use.
+   ``FLI_AR571`` for the Aurora baseline. The preset represents 2×2 binning,
+   yielding 3122 × 2084 output samples at an effective 7.52 µm sampling. It
+   leaves ``gain`` unspecified and therefore inherits the generic 1 e⁻/ADU
+   default; a measured value for the deployed readout mode should be supplied
+   before quantitative use.
 
 ``SpectrographModel``
    Physical optical geometry. It derives central wavelength, dispersion,
@@ -77,6 +79,22 @@ Example configuration
 
 The numeric values above illustrate the interface; use the instrument's current
 measured/configured values for production simulations.
+
+Detector binning
+----------------
+
+``binning`` must be a positive integer that evenly divides both detector
+dimensions. A factor ``b`` models square ``b`` × ``b`` binning by dividing
+``nx`` and ``ny`` by ``b`` and multiplying ``pixel_size`` by ``b``. Dark
+current and full-well charge per output sample scale by ``b**2``, while the
+read noise of the summed independent native pixels scales by ``b``. Gain and
+the output bias pedestal are unchanged.
+
+After initialization, ``nx``, ``ny``, ``pixel_size``, ``read_noise``,
+``dark_current``, and ``full_well`` describe the binned output. The corresponding
+native values remain available as ``native_nx``, ``native_ny``,
+``native_pixel_size``, ``native_read_noise``, ``native_dark_current``, and
+``native_full_well``.
 
 Multi-fiber spectra
 -------------------
