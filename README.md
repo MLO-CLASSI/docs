@@ -1,5 +1,7 @@
 # MLO CLASSI Spectrograph Software Documentation
 
+[![GitHub Actions Build Status](https://img.shields.io/github/actions/workflow/status/MLO-CLASSI/docs/pages.yml)](https://github.com/MLO-CLASSI/docs/deployments/github-pages)
+
 Sphinx (RTD) documentation for the CLASSI Spectrograph software.
 
 The site is designed to be hosted from this repository with GitHub Pages while
