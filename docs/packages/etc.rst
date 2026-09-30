@@ -25,7 +25,7 @@ properties are:
 ``get_SNR_from_spectrum(...)``
    Calculate counts and S/N for one or more wavelength bins. The default
    configuration uses the FLI Aurora AR571 camera, Newport 1294 grating, dark-sky
-   background, and a fiber-coupling efficiency of 1.0.
+   background, 2×2 detector binning, and a fiber-coupling efficiency of 1.0.
 
 ``get_limiting_magnitudes_from_spectrum(...)``
    Calculate the source AB magnitude that reaches ``target_snr`` in each
@@ -52,6 +52,12 @@ properties are:
    LSST ``g``, ``r``, or ``i`` magnitude-band configurations represented by
    the installed reference data.
 
+Both calculation methods accept an optional integer ``binning`` argument. If it
+is omitted, the ETC uses 2×2 binning for Aurora and 1×1 for Kepler and QHY268.
+The factor must be positive and evenly divide both native detector dimensions.
+It is applied at ``InstrumentSimulator`` runtime rather than stored on the
+native ``DetectorModel``.
+
 The ETC interprets input-spectrum wavelengths, ``wave_centers``, and
 ``binsize`` in the observer frame. It does not apply a redshift correction; a
 rest-frame template must be transformed to the observer frame before it is
@@ -74,6 +80,10 @@ that S/N in each requested wavelength bin. The exposure time, spectral shape,
 instrument configuration, sky background, and fiber-coupling efficiency are
 shared by both calculations.
 
+The binning selector resets to the camera default when a camera is selected and
+offers common factors that evenly divide that detector. It is editable so that
+another valid positive integer factor can be entered directly.
+
 Result structure
 ----------------
 
@@ -89,15 +99,17 @@ Both calculation methods return a mapping containing:
    ``source_counts`` is the source count level required to reach ``target_snr``.
 
 ``meta``
-   Resolved detector/instrument values such as read noise, dispersion,
+   Resolved detector/readout and instrument values such as
+   ``detector_binning``, read noise, dark current, dispersion,
    ``extraction_aperture_pix``, ``extraction_fraction``, grating, airmass,
    ``fiber_coupling_efficiency``, ``sky_background``, and any spectrum-scaling
    factor. ``detector_temperature_c`` records the fixed -20 °C operating
-   assumption used to select each camera's dark current. Pixel counts and their
-   associated read-noise and dark-current terms vary by wavelength bin and are
-   therefore stored on each ``SNRBinResult``, not in ``meta``. An inverse
-   calculation also records ``target_snr``, ``limiting_magnitude_band``, and the
-   input spectrum's ``reference_magnitude`` in ``meta``.
+   assumption used to select each camera's native-pixel dark current. Pixel
+   counts and their associated read-noise and dark-current terms vary by
+   wavelength bin and are therefore stored on each ``SNRBinResult``, not in
+   ``meta``. An inverse calculation also records ``target_snr``,
+   ``limiting_magnitude_band``, and the input spectrum's
+   ``reference_magnitude`` in ``meta``.
 
 ``throughput_plot``
    Wavelength and component arrays suitable for plotting the response used in
@@ -118,6 +130,7 @@ Example
        binsize=5.0,
        sky_background="grey",
        camera_model="Aurora",
+       binning=2,
        grating_id=1294,
        airmass=1.3,
        fiber_coupling_efficiency=0.75,
@@ -141,6 +154,7 @@ To solve for the per-bin limiting magnitude at a fixed exposure time:
        magnitude_band="r",
        sky_background="dark",
        camera_model="Aurora",
+       binning=2,
        grating_id=1294,
        airmass=1.3,
        fiber_coupling_efficiency=0.75,
@@ -148,6 +162,12 @@ To solve for the per-bin limiting magnitude at a fixed exposure time:
 
    for bin_result in limits["bins"]:
        print(bin_result.wave_center_nm, bin_result.limiting_magnitude)
+
+The ETC constructs the optical model with the native detector, then applies the
+selected binning through ``InstrumentSimulator``. It obtains effective read
+noise and dark current from ``simulator.readout`` and uses
+``simulator.readout_spectrograph`` for dispersion, wavelength-to-pixel mapping,
+fiber pitch, and the extraction profile in output-pixel coordinates.
 
 The coupling efficiency is a fraction from 0 to 1 and reduces source counts
 only. The selected line-resolved DESI sky spectrum is integrated over the

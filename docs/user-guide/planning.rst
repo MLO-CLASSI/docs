@@ -16,6 +16,7 @@ are in the observer frame, together with:
 * observer-frame wavelength-bin centers and bin size;
 * sky background (``dark``, ``grey``, or ``bright``);
 * detector/camera model;
+* square detector binning;
 * grating choice;
 * numerical airmass;
 * fiber length;
@@ -39,11 +40,14 @@ Fiber-coupling efficiency is a fraction from 0 to 1 representing point-source
 light lost before entering the fiber. It reduces source counts but not sky
 counts. The default of 1.0 assumes perfect coupling.
 
-Detector sampling, fiber pitch, extraction fraction, read noise, telescope
+Detector binning is selected separately from the camera model. It defaults to
+2×2 for Aurora and 1×1 for Kepler and QHY268. The selected factor must be a
+positive integer that evenly divides both native detector dimensions. Effective
+detector sampling, fiber pitch, extraction fraction, read noise, telescope
 collecting area, and the component throughput model are derived from the
-selected camera and the shared ``classi-sim`` instrument model rather
-than entered as independent GUI parameters. The default instrument
-configuration is the FLI Aurora AR571 camera with the Newport 1294 grating.
+selected camera, binning, and shared ``classi-sim`` instrument model rather than
+entered as independent GUI parameters. The default instrument configuration is
+the FLI Aurora AR571 camera with 2×2 binning and the Newport 1294 grating.
 
 Throughput accounting
 ---------------------
@@ -65,16 +69,18 @@ the centerline of each neighboring trace. Source and sky counts are multiplied
 by the fraction of the assumed Gaussian fiber profile enclosed by that box.
 Fiber coupling is then applied only to the source. Dark-current and read-noise
 variance use the same extraction-box pixel count. The detector temperature is
-not a user input: the ETC uses each camera's fixed dark-current value at -20 °C
-and records that assumption in the result metadata.
+not a user input: the ETC uses each camera's native-pixel dark-current value at
+-20 °C and records that assumption in the result metadata. For square binning
+factor ``b``, the simulator readout model scales dark current per output pixel by
+``b**2`` and read noise per output pixel by ``b``.
 
 Source and sky spectra are linearly interpolated at the exact requested bin
 boundaries before integration, so an input spectrum must cover every complete
-bin. For the default detector configuration, the spectral width of each bin is
-computed from the nonlinear ``SpectrographModel.wavelength_to_x()`` mapping
-rather than from ``binsize / dispersion``. Consequently, the spectral and total
-pixel counts and their read-noise and dark-current contributions are reported
-separately on each bin result.
+bin. The spectral width of each bin is computed from the nonlinear
+``readout_spectrograph.wavelength_to_x()`` mapping for the selected camera and
+binning rather than from ``binsize / dispersion``. Consequently, the spectral
+and total pixel counts and their read-noise and dark-current contributions are
+reported separately on each bin result.
 
 The reported result for each wavelength bin also includes source counts, sky
 counts, S/N, and mean component throughputs.
@@ -87,8 +93,8 @@ Recommended workflow
 #. If it is a rest-frame template, transform it to the observer frame before
    supplying it to the ETC. If needed, scale it to the target's measured LSST
    ``g``, ``r``, or ``i`` AB magnitude.
-#. Select the expected camera/grating configuration, airmass, and dark, grey,
-   or bright sky background.
+#. Select the expected camera, detector binning, grating, airmass, and dark,
+   grey, or bright sky background.
 #. Estimate the point-source fiber-coupling efficiency for the observing setup.
 #. Evaluate several wavelength bins, especially the region containing the
    diagnostic spectral feature that drives the observation. Either compute the

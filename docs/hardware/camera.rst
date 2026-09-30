@@ -38,14 +38,16 @@ also supports other camera models for comparison.
      - 7 frames s⁻¹
 
 Read noise, dark current, frame rate, full well, and cooling performance depend
-on readout and operating mode. The ETC models 1 e⁻ read noise and
-0.002 e⁻ pixel⁻¹ s⁻¹ dark current at -20 °C.
+on readout and operating mode. The ETC's native Aurora model uses 1 e⁻ read noise
+and 0.002 e⁻ pixel⁻¹ s⁻¹ dark current at -20 °C.
 
 The table gives native-sensor properties, which are also what the simulator's
 ``FLI_AR571`` preset stores. Readout binning is selected on each
-``InstrumentSimulator`` instance. For example, ``binning=2`` produces 3122 ×
-2084 output samples with an effective 7.52 µm sampling while retaining the
-native detector definition for charge and saturation calculations.
+``InstrumentSimulator`` instance and in the ETC. The ETC defaults Aurora to
+2×2, for which the simulator readout model has 3122 × 2084 output samples,
+7.52 µm effective sampling, 2 e⁻ read noise, and 0.008 e⁻ output-pixel⁻¹ s⁻¹
+dark current. The native detector definition remains the basis for charge and
+saturation calculations.
 
 Vendor resources
 ----------------
