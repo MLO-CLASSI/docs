@@ -59,6 +59,21 @@ samples. This preserves the information required for a small integral-field
 bundle and avoids hard-coding a permanent semantic role for a given fiber
 number.
 
+Target photometric anchoring
+----------------------------
+
+After wavelength and spectrophotometric calibration, the optional Level-3
+library interface can anchor a target spectrum to external broadband
+photometry. A single band fits a grey scale factor, two bands also fit a colour
+term, and three or more bands fit up to quadratic curvature in log wavelength
+by default. Nearly simultaneous B/V/R target photometry is the intended common
+case.
+
+The corrected flux and per-sample statistical uncertainty remain separate from
+the fitted coefficient covariance, which represents wavelength-correlated
+photometric-calibration uncertainty. L3 has no FITS or command-line wrapper
+until the L2 product format is defined.
+
 Validation with the simulator
 -----------------------------
 

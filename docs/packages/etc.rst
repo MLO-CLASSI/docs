@@ -43,9 +43,9 @@ properties are:
    magnitude.
 
 ``get_throughput_components(...)``
-   Return atmosphere, fiber, miscellaneous-loss, collimator, grating, detector
-   window, detector-QE, and total-throughput arrays on a supplied wavelength
-   grid.
+   Return atmosphere, pickoff-mirror, order-filter, fiber, collimator, grating,
+   camera-lens, detector-window, detector-QE, and total-throughput arrays on a
+   supplied wavelength grid.
 
 ``available_camera_models`` / ``available_gratings`` / ``available_sky_backgrounds`` / ``available_magnitude_bands``
    Enumerate the camera, grating, ``dark``, ``grey``, or ``bright`` sky, and
@@ -159,9 +159,10 @@ variance use the pixel count in that same extraction box.
 Data dependency
 ---------------
 
-The ETC depends on ``classi-sim`` for the physical instrument, detector,
-atmospheric-extinction, throughput, and photon-flux models. Reference curves
-and spectra come from ``classi-shared-data`` through the ``shared_data``
-resource dictionaries. The default fiber-throughput term uses the CeramOptec
-UVNS attenuation curve. This keeps ETC predictions consistent with detector
+The ETC constructs the telescope, detector, grating, fiber, and optical train
+from ``classi-sim`` components. It also uses the simulator's DESI sky presets,
+fiber sky-area calculation, atmospheric-extinction handling, throughput
+assembly, and photon-flux conversion. The component curve and spectrum payloads
+come from ``classi-shared-data``; the default fiber term uses the CeramOptec
+UVNS attenuation curve. This keeps ETC predictions aligned with detector
 simulations and makes reference-data changes explicit package changes.

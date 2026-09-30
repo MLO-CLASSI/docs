@@ -19,12 +19,12 @@ each row can contain a different spectrum.
 Detector sampling
 -----------------
 
-The detector model can represent square binning. Its image dimensions, pixel
-size, dispersion per output pixel, and projected trace dimensions reflect the
-configured binned sampling. The Aurora preset uses 2×2 binning, producing a
-3122 × 2084 image whose samples span 7.52 µm on the native detector. Native
-detector properties remain available through the model's ``native_*``
-attributes.
+Detector models describe native physical sensors. Square readout binning is
+selected per ``InstrumentSimulator`` instance. For example, ``binning=2`` with
+the Aurora preset produces a 3122 × 2084 output whose samples span 7.52 µm on
+the sensor. ``simulator.readout`` describes that output grid, while
+``simulator.readout_spectrograph`` supplies dispersion and projected trace
+dimensions in output-pixel coordinates.
 
 Input spectra can be more coarsely sampled than the detector dispersion. Before
 rendering, the simulator maps the supplied wavelengths to detector ``x``. If
@@ -33,6 +33,16 @@ uniform detector-coordinate grid, maps that grid back to wavelength, and
 linearly interpolates each spectrum while preserving the original samples as
 breakpoints. This follows the nonlinear grating mapping across the detector and
 prevents gaps in traces from sparsely sampled input spectra.
+
+Sky background
+--------------
+
+The reusable ``DESI_SKY_DARK``, ``DESI_SKY_GREY``, and ``DESI_SKY_BRIGHT``
+presets can be passed as ``sky=`` when constructing the simulator. They are
+line-resolved surface-brightness spectra from ``classi-shared-data``. The
+simulator integrates them over the circular fiber sky area and applies the
+downstream optical train. Atmospheric extinction is not applied to these
+at-observatory spectra a second time.
 
 Optical geometry
 ----------------
@@ -62,11 +72,12 @@ For each wavelength sample and fiber, the simulator:
 #. maps wavelength to detector ``x`` through the grating geometry;
 #. maps the fiber to the appropriate detector ``y`` trace;
 #. deposits the counts with a two-dimensional Gaussian kernel; and
-#. optionally applies a vignetting map.
+#. adds any configured sky image and optionally applies a vignetting map.
 
-The detector model combines source and dark-current charge, applies Poisson
-noise, clips accumulated charge at full well, then adds read noise before gain
-conversion and bias. Read noise is therefore not clipped by the physical
-full-well capacity.
+For a noisy simulation, the detector combines source, sky, and dark-current
+charge on the native grid, applies Poisson noise, clips each native pixel at
+full well, and adds native-pixel read noise. The readout then sums square bins
+before applying gain conversion and the output bias. An ideal/noiseless
+simulation is also binned before it is returned.
 
 Use a fixed random seed when producing regression fixtures for the pipeline.

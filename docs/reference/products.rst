@@ -74,5 +74,5 @@ Simulation products
 
 Synthetic detector frames should record enough simulator configuration to be
 reproduced: physical spectrograph parameters, native detector model and binning,
-throughput data versions, exposure time, random seed, and input-spectrum
-provenance.
+atmosphere and sky selections, throughput data versions, exposure time, random
+seed, and input-spectrum provenance.

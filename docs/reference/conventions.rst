@@ -39,9 +39,10 @@ Array orientation
 Detector images follow NumPy convention ``image[y, x]`` with shape
 ``(ny, nx)``. The dispersion direction is represented by the detector ``x``
 coordinate in the simulator, while the individual fiber traces are separated
-along ``y``. For a binned ``DetectorModel``, ``nx``, ``ny``, and ``pixel_size``
-describe the output array and its effective sampling; the ``native_*``
-attributes retain the unbinned sensor properties.
+along ``y``. ``DetectorModel`` coordinates describe the native sensor.
+``InstrumentSimulator.readout`` describes the binned output array, and
+``readout_spectrograph`` maps wavelengths and trace geometry in that output
+coordinate system.
 
 Spectral arrays
 ---------------

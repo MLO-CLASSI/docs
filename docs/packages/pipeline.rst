@@ -51,11 +51,29 @@ requested rebinning.
 Processing levels
 -----------------
 
-The code separates detector/image handling from the Level-1 spectral extraction.
+The code separates detector/image handling from Level-1 spectral extraction.
 A typical instrument-specific script reads a FITS frame into a CCD-style object,
 locates or supplies the trace centers, and calls the generic Level-1 processing
-routines. Level 2 is a placeholder and does not perform wavelength or
-spectrophotometric calibration.
+routines. Level 2 remains a placeholder for wavelength and spectrophotometric
+calibration. Level 3 provides target-specific photometric anchoring for spectra
+that have already been wavelength- and (preliminarily) flux-calibrated.
+
+Level-3 photometric anchoring
+-----------------------------
+
+The ``pipeline.l3`` module fits a positive, smooth multiplicative correction
+from broadband photometry. ``PhotometricPoint`` records a band, magnitude,
+uncertainty, and magnitude system; ``fit_photometric_correction`` accepts those
+points plus a calibrated spectrum. One band fits a grey scale factor, two bands
+also fit colour, and three or more fit up to quadratic curvature in log
+wavelength by default. Built-in aliases cover Johnson B/V and Cousins R/I, and
+callers can supply arbitrary ``synphot`` bandpasses.
+
+``apply_photometric_correction`` scales the flux and its per-sample statistical
+uncertainty. The returned ``PhotometricCorrection.covariance`` separately
+represents the wavelength-correlated calibration uncertainty. L3 currently has
+no FITS or command-line wrapper because the L2 product format is not yet
+defined.
 
 Primary extraction interface
 ----------------------------
