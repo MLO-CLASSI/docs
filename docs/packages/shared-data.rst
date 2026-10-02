@@ -12,7 +12,7 @@ private copy of the same curves.
 Package layout
 --------------
 
-The distribution contains two top-level data directories:
+The repository contains three top-level data directories:
 
 .. code-block:: text
 
@@ -20,6 +20,8 @@ The distribution contains two top-level data directories:
    ├── __init__.py
    ├── csv_files/
    │   └── *.csv
+   ├── filters/
+   │   └── *.dat
    ├── reference_spectra/
    │   └── ...
    └── pyproject.toml
@@ -28,8 +30,10 @@ The repository is named ``shared-data``, the distribution installed by pip is
 ``classi-shared-data``, and the import package is
 ``shared_data``.
 
-The packaging metadata includes ``csv_files/*.csv`` and all files immediately
-under ``reference_spectra`` as package data.
+The installable distribution includes ``csv_files/*.csv`` and all files
+immediately under ``reference_spectra`` as package data. The ``filters``
+directory is repository-maintained source data and is not exposed through the
+installed ``shared_data`` package.
 
 Accessing packaged files
 ------------------------
@@ -60,12 +64,30 @@ in the shared-data repository's `reference-spectrum inventory`_.
 .. _reference-spectrum inventory:
    https://github.com/MLO-CLASSI/shared-data/blob/main/reference_spectra/README.md
 
+Photometric bandpasses
+----------------------
+
+The repository's `filter-profile directory`_ contains LSST v1.9 total-system
+``g``, ``r``, and ``i`` throughput profiles. Each file header records the
+upstream ``syseng_throughputs`` version and commit, atmospheric treatment, and
+blue/red wavelength cutoffs. These profiles define the AB magnitudes reported
+in the reference-spectrum inventory.
+
+Because the filter profiles are not package data, installed-package consumers
+cannot access them through ``CSV_FILES`` or ``REFERENCE_SPECTRA``. The
+repository directory and the metadata embedded in each profile are the
+authoritative sources for their content and provenance.
+
+.. _filter-profile directory:
+   https://github.com/MLO-CLASSI/shared-data/tree/main/filters
+
 What belongs here?
 ------------------
 
 Put data here when multiple spectrograph packages need the same authoritative
 file: detector QE curves, grating-efficiency curves, fiber attenuation,
-atmospheric extinction, and common reference spectra are typical examples.
+photometric bandpasses, atmospheric extinction, and common reference spectra
+are typical examples.
 
 Generated observation products and user-specific calibration data should not be
 put in this package.

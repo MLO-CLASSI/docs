@@ -28,6 +28,19 @@ Its best focus, usable aperture, chromatic residuals, field dependence, and
 line-spread function still need to be characterized in the assembled instrument.
 Stopping down can reduce aberrations but also reduces throughput.
 
+Throughput-model limitation
+---------------------------
+
+The simulator represents this lens with the shared-data
+`Canon EF 85 mm proxy curve`_, not a measurement of the installed 100 mm f/2
+lens. Its blue end includes estimated values extending the curve to 360 nm.
+Simulator and ETC results in that region should therefore be treated as an
+engineering estimate until the installed lens is measured or a more suitable
+source curve is adopted.
+
+.. _Canon EF 85 mm proxy curve:
+   https://github.com/MLO-CLASSI/shared-data/blob/main/csv_files/LensTip_CanonEF85mm.csv
+
 Vendor resources
 ----------------
 

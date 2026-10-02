@@ -23,6 +23,17 @@ band.
    * - Mechanical format
      - Mounted lens (``-ML``), SM2 thread
 
+Throughput-model limitation
+---------------------------
+
+The shared-data `collimator throughput curve`_ includes an estimated 360 nm
+point below the manufacturer's 400--1100 nm coating range. Simulator and ETC
+predictions below 400 nm should therefore be treated as extrapolations rather
+than catalog-validated collimator performance.
+
+.. _collimator throughput curve:
+   https://github.com/MLO-CLASSI/shared-data/blob/main/csv_files/ac508-180-ab.csv
+
 Vendor resources
 ----------------
 
