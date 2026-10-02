@@ -47,8 +47,8 @@ shared calibration/reference files from being copied into every repository.
      - Reduce detector frames and extract one-dimensional spectra from the fiber
        traces, carrying masks and uncertainties through the reduction.
    * - ``shared-data`` / ``classi-shared-data`` / ``shared_data``
-     - Installable package containing common CSV calibration/reference curves and
-       reference spectra.
+     - Installable package containing common calibration/reference curves,
+       atmosphere and sky models, and reference spectra.
    * - ``ics`` / ``classi-ics`` / ``ics``
      - Operate and monitor the science camera, camera-lens focus, telescope-side
        guide hardware, and related observatory interfaces.

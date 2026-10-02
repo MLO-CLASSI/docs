@@ -16,9 +16,13 @@ Core objects
    declared wavelength unit.
 
 ``AtmosphericExtinction``
-   A throughput curve derived from the adopted site extinction data and an
-   airmass. The selected value is available as the object's ``airmass``
-   attribute.
+   A throughput curve derived from the LSST v1.9 standard-atmosphere profile
+   distributed by ``classi-shared-data``. The profile includes aerosol,
+   telluric, and line-absorption structure from 300 to 1150 nm. It represents
+   nominal airmass 1.0; the simulator evaluates a selected airmass ``X`` as
+   ``T(wavelength)**X``. The selected value is available as the object's
+   ``airmass`` attribute, and wavelengths outside the tabulated range have zero
+   throughput by default.
 
 ``DetectorModel``
    Detector dimensions, pixel size, gain, read noise, dark current, bias, and
@@ -94,6 +98,28 @@ Example configuration
 
 The numeric values above illustrate the interface; use the instrument's current
 measured/configured values for production simulations.
+
+Reference-spectrum reader
+-------------------------
+
+``read_reference_spectrum(path)`` is the public convenience loader used by the
+repository example. It recognizes two input conventions:
+
+* a filename containing ``SNIFS`` is read as the three-column SNIFS ASCII
+  convention (wavelength, flux, and uncertainty) and returned as a FITS binary
+  table HDU with units and parsed header metadata; and
+* an ``.ecsv`` file is returned as an Astropy table whose ``header`` property
+  aliases ``meta``. The loader maps ``TARGETID`` to ``OBJECT`` when needed and
+  expands an Astropy ``coordinates`` entry into numeric ``RA`` and ``DEC``
+  metadata.
+
+Other filename and format conventions are unsupported; callers should verify
+that the return value is not ``None`` before passing it to the renderer. The
+shared-data `reference-spectrum inventory`_ is the authoritative list of
+available inputs.
+
+.. _reference-spectrum inventory:
+   https://github.com/MLO-CLASSI/shared-data/blob/main/reference_spectra/README.md
 
 Detector binning
 ----------------

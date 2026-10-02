@@ -54,3 +54,4 @@ Vendor resources
 
 * `FLI AR571 product page <https://www.flicamera.com/models/ar571>`_
 * `FLI Aurora camera family <https://www.flicamera.com/product/aurora-cmos-camera>`_
+* `FLI camera window cover transmissivity <https://cdn.prod.website-files.com/6785336f5e59f73ce314ba25/685c56560944fa0fa0c4e2ce_WindowTransmissivityA.pdf>`_

@@ -186,3 +186,10 @@ assembly, and photon-flux conversion. The component curve and spectrum payloads
 come from ``classi-shared-data``; the default fiber term uses the CeramOptec
 UVNS attenuation curve. This keeps ETC predictions aligned with detector
 simulations and makes reference-data changes explicit package changes.
+
+The atmosphere component uses the shared LSST v1.9 standard-atmosphere profile,
+including its telluric and line-absorption structure. Its nominal airmass-1.0
+throughput is raised to the selected numerical airmass. Source-count and
+component-throughput results therefore inherit the wavelength sampling and
+provenance of that shared profile; the at-observatory DESI sky spectra remain
+outside this atmosphere term.

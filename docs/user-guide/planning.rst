@@ -58,6 +58,13 @@ grating, fiber, atmosphere, and lens contributions individually and to disable a
 term for diagnostic comparisons. The fiber term uses the CeramOptec UVNS
 attenuation profile distributed by ``classi-shared-data``.
 
+The atmosphere term uses the LSST v1.9 standard-atmosphere transmission profile
+distributed by ``classi-shared-data``. It includes aerosol, telluric, and
+line-absorption structure; the nominal airmass-1.0 throughput is raised to the
+selected numerical airmass. ETC predictions near atmospheric features inherit
+the profile's sampling and should be treated as planning estimates rather than
+an observation-specific telluric correction.
+
 The ``dark``, ``grey``, and ``bright`` choices select line-resolved DESI sky
 spectra. Each sky spectrum is integrated on its own finely sampled wavelength
 grid over the fiber's circular on-sky area, preserving narrow airglow lines.

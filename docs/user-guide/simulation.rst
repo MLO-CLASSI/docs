@@ -34,6 +34,15 @@ linearly interpolates each spectrum while preserving the original samples as
 breakpoints. This follows the nonlinear grating mapping across the detector and
 prevents gaps in traces from sparsely sampled input spectra.
 
+Atmosphere
+----------
+
+Pass ``AtmosphericExtinction(airmass=X)`` as ``atmosphere=`` to apply the
+shared LSST v1.9 standard-atmosphere profile to source light. The profile
+contains aerosol, telluric, and line-absorption structure from 300 to 1150 nm.
+It represents nominal airmass 1.0, and the simulator computes the requested
+airmass as ``T(wavelength)**X``.
+
 Sky background
 --------------
 

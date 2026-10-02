@@ -19,7 +19,7 @@ The repository contains three top-level data directories:
    shared-data/
    ├── __init__.py
    ├── csv_files/
-   │   └── *.csv
+   │   └── *.csv / *.ecsv
    ├── filters/
    │   └── *.dat
    ├── reference_spectra/
@@ -30,10 +30,10 @@ The repository is named ``shared-data``, the distribution installed by pip is
 ``classi-shared-data``, and the import package is
 ``shared_data``.
 
-The installable distribution includes ``csv_files/*.csv`` and all files
-immediately under ``reference_spectra`` as package data. The ``filters``
-directory is repository-maintained source data and is not exposed through the
-installed ``shared_data`` package.
+The installable distribution includes ``csv_files/*.csv``,
+``csv_files/*.ecsv``, and all files immediately under ``reference_spectra`` as
+package data. The ``filters`` directory is repository-maintained source data and
+is not exposed through the installed ``shared_data`` package.
 
 Accessing packaged files
 ------------------------
@@ -63,6 +63,20 @@ in the shared-data repository's `reference-spectrum inventory`_.
 
 .. _reference-spectrum inventory:
    https://github.com/MLO-CLASSI/shared-data/blob/main/reference_spectra/README.md
+
+Atmospheric transmission
+------------------------
+
+The `LSST atmosphere profile`_ is an Astropy ECSV table with wavelength in
+nanometers and dimensionless throughput. Its embedded metadata identifies
+``syseng_throughputs`` version 1.9, upstream commit
+``fcc05772f99427e4a45cd1b9da1628dded9a06d5``, nominal airmass 1.0, aerosol
+treatment, and the upstream ``atmos_10.dat`` source. The simulator treats that
+embedded airmass as the baseline and raises its throughput to the requested
+airmass. The repository file and its metadata are authoritative for this model.
+
+.. _LSST atmosphere profile:
+   https://github.com/MLO-CLASSI/shared-data/blob/main/csv_files/atm_lsst.ecsv
 
 Photometric bandpasses
 ----------------------
