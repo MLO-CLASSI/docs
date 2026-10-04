@@ -70,6 +70,13 @@ camera focal length, and detector pixel size. Fiber pitch and fiber image width
 are likewise projected from physical dimensions through the
 camera/collimator magnification.
 
+The native and binned mappings are exposed as
+``specreduce.wavesol1d.WavelengthSolution1D`` objects through
+``SpectrographModel.wavelength_solution`` and
+``InstrumentSimulator.wavelength_solution`` respectively. These are
+fourth-degree polynomial approximations to the physical grating mapping and can
+be evaluated in either direction with ``pix_to_wav()`` and ``wav_to_pix()``.
+
 Image formation
 ---------------
 

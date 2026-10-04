@@ -50,6 +50,31 @@ Use ``--plot`` to write a quicklook PNG of all extracted traces beside the L1
 FITS file. The plot reflects the data actually written to the product, including
 any rebinning, and is intended for inspection rather than scientific analysis.
 
+Wavelength calibration
+----------------------
+
+The Level-2 library represents the baseline wavelength calibration as one
+versioned ASDF reference file containing a ``WavelengthSolution1D`` for every
+fiber trace. A maintainer supplies matched arc-line pixels and wavelengths to
+``fit_arc_wavelength_solution()``, reviews the stored residuals and RMS
+diagnostics, and writes the accepted trace set with ``write_wavesol()``.
+
+All calibration pixels use zero-based native detector coordinates. This remains
+true for rebinned Level-1 spectra because their ``PIXEL`` column stores the mean
+native coordinate of each output sample. The ASDF metadata explicitly records
+the wavelength unit and whether wavelengths are in air or vacuum; vacuum is the
+fit default.
+
+For a science exposure, ``fit_sky_refinement()`` can align measured night-sky
+line centroids with a baseline arc solution. One line constrains a shift; two or
+more can constrain a shift and dispersion stretch. Sky-line detection and
+centroiding are separate responsibilities so the reduction workflow can choose
+an appropriate sky fiber or combined sky spectrum.
+
+These functions provide the calibration-reference and fitting machinery.
+``process_l2()`` does not apply them to Level-1 files, and no Level-2 science
+FITS format or command-line workflow is defined.
+
 Multi-fiber products
 --------------------
 

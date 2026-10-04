@@ -21,6 +21,12 @@ The distribution is ``classi-pipeline`` and its import namespace is
        --gain 1.2 --read-noise 3.5 \
        --rebin 4 --plot
 
+The dependency specification installs ``specreduce`` directly from the
+``main`` branch of its GitHub repository and declares ``asdf`` explicitly for
+wavelength-calibration reference files. A reproducible pipeline environment
+should record the resolved ``specreduce`` commit as well as the CLASSI commit;
+installing this revision requires Git and network access to GitHub.
+
 Use ``--centers`` for an explicit comma-separated list, or ``--center`` and
 ``--spacing`` with the configurable ``--n-traces`` value. Bias, dark, and flat
 masters can be supplied with ``--bias``, ``--dark``, and ``--flat``.
@@ -54,9 +60,55 @@ Processing levels
 The code separates detector/image handling from Level-1 spectral extraction.
 A typical instrument-specific script reads a FITS frame into a CCD-style object,
 locates or supplies the trace centers, and calls the generic Level-1 processing
-routines. Level 2 remains a placeholder for wavelength and spectrophotometric
-calibration. Level 3 provides target-specific photometric anchoring for spectra
-that have already been wavelength- and (preliminarily) flux-calibrated.
+routines. Level 2 provides library machinery for arc-derived wavelength
+solutions and per-exposure sky-line refinement; ``process_l2()`` and the final
+Level-2 science-product interface remain placeholders. Level 3 provides
+target-specific photometric anchoring for spectra that have already been
+wavelength- and (preliminarily) flux-calibrated.
+
+Level-2 wavelength calibration
+------------------------------
+
+``pipeline.l2`` exposes the following public wavelength-calibration interfaces:
+
+``fit_arc_wavelength_solution(...)``
+   Fit one trace from matched native-pixel positions and reference wavelengths.
+   It returns an ``ArcWavelengthSolution`` containing a
+   ``specreduce.wavesol1d.WavelengthSolution1D`` plus line identifiers,
+   used/rejected flags, wavelength and pixel residuals, and RMS diagnostics.
+   The default fit is a second-degree polynomial in Angstrom with vacuum
+   wavelengths.
+
+``write_wavesol(...)`` / ``read_wavesol(...)``
+   Serialize or restore all trace solutions in one versioned ASDF reference
+   file. The top-level ``classi_wavesol`` tree records the format version,
+   creation time, wavelength unit and medium, native pixel convention, arc-file
+   provenance, lamp names, and trace count. Each trace stores its GWCS
+   transform and bounding box together with the matched-line arrays and fit
+   diagnostics.
+
+``fit_sky_refinement(...)``
+   Fit measured science-exposure sky-line centroids against a baseline arc
+   solution. ``mode="auto"`` fits a pixel shift from one line and an affine
+   shift plus stretch from two or more lines. Optional centroid uncertainties
+   weight the fit. The returned ``SkyRefinement`` can compose the correction
+   with the baseline through ``refined_solution(...)`` without refitting its
+   higher-order shape.
+
+Wavelength-solution pixel coordinates are zero-based native detector
+coordinates along array axis 1. ``pix_bounds`` uses a lower-inclusive,
+upper-exclusive pair. This convention also applies to rebinned Level-1 spectra:
+their ``PIXEL`` values remain means of native detector coordinates rather than
+indices into the shorter output table.
+
+Automatic arc-line matching, automatic sky-line selection and centroiding,
+application to a Level-1 product, and Level-2 FITS output are outside these
+interfaces. Callers supply the matched arc lines or measured sky centroids.
+The pipeline repository's `Level-2 reference`_ is authoritative for the ASDF
+tree and mathematical refinement model.
+
+.. _Level-2 reference:
+   https://github.com/MLO-CLASSI/pipeline#l2---physical-spectral-calibration
 
 Level-3 photometric anchoring
 -----------------------------
@@ -71,9 +123,8 @@ callers can supply arbitrary ``synphot`` bandpasses.
 
 ``apply_photometric_correction`` scales the flux and its per-sample statistical
 uncertainty. The returned ``PhotometricCorrection.covariance`` separately
-represents the wavelength-correlated calibration uncertainty. L3 currently has
-no FITS or command-line wrapper because the L2 product format is not yet
-defined.
+represents the wavelength-correlated calibration uncertainty. L3 has no FITS or
+command-line wrapper because the L2 science-product format is not defined.
 
 Primary extraction interface
 ----------------------------

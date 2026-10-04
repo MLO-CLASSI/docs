@@ -5,7 +5,9 @@ Purpose
 -------
 
 The simulator is a forward model from physical spectrograph configuration and
-input spectra to a synthetic detector image.
+input spectra to a synthetic detector image. The distribution requires Python
+3.11 or newer and depends on ``specreduce>=1.7`` for wavelength-solution
+objects.
 
 Core objects
 ------------
@@ -49,12 +51,15 @@ Core objects
 ``SpectrographModel``
    Physical optical geometry. It derives central wavelength, dispersion,
    magnification, anamorphic factor, projected fiber pitch, and spatial/spectral
-   widths rather than requiring those quantities as independent inputs.
+   widths rather than requiring those quantities as independent inputs. Its
+   ``wavelength_solution`` property represents the native detector grid as a
+   ``specreduce.wavesol1d.WavelengthSolution1D``.
 
 ``InstrumentSimulator``
    Combines the spectrograph, telescope, atmosphere, optional sky, and readout
    binning; renders expected electrons; resamples coarse input spectra as
-   needed; and optionally applies the detector noise model.
+   needed; and optionally applies the detector noise model. Its
+   ``wavelength_solution`` property represents the configured readout grid.
 
 The simulator repository's `README example`_ is the authoritative compact
 inventory of the component-based CLASSI configuration.
@@ -99,6 +104,35 @@ Example configuration
 The numeric values above illustrate the interface; use the instrument's current
 measured/configured values for production simulations.
 
+Wavelength solution
+-------------------
+
+The simulator exposes detector-coordinate wavelength mappings as
+``WavelengthSolution1D`` objects:
+
+.. code-block:: python
+
+   solution = simulator.wavelength_solution
+   wavelength = solution.pix_to_wav(pixel) * solution.unit
+   pixel = solution.wav_to_pix(wavelength.to_value(solution.unit))
+
+``SpectrographModel.wavelength_solution`` covers the native detector with
+zero-based bounds ``(0, detector.nx)``.
+``InstrumentSimulator.wavelength_solution`` is the corresponding solution for
+``readout_spectrograph`` after binning. The ``x_to_wavelength()`` and
+``wavelength_to_x()`` methods delegate to the same objects and return
+unit-bearing Astropy quantities.
+
+The stored transform is a fourth-degree polynomial fit across every pixel of
+the associated detector or readout grid. It is therefore an approximation to
+the analytic grating mapping, not an independent measured calibration.
+Geometry changes should be checked against the exact model across the complete
+detector range; the repository's `geometry regression tests`_ define the
+accepted mapping accuracy.
+
+.. _geometry regression tests:
+   https://github.com/MLO-CLASSI/sim/blob/main/tests/test_geometry.py
+
 Reference-spectrum reader
 -------------------------
 
@@ -134,8 +168,8 @@ multiplied by ``b``.
 Optical signal, dark charge, full-well saturation, and read noise are evaluated
 on native pixels before each block is summed. Gain and the output bias are then
 applied to the binned image. ``simulator.readout_spectrograph`` supplies the
-wavelength/pixel geometry in output coordinates, while
-``simulator.spectrograph`` retains native coordinates.
+wavelength/pixel geometry and ``wavelength_solution`` in output coordinates,
+while ``simulator.spectrograph`` retains the native-coordinate solution.
 
 Component-based throughput and sky
 ----------------------------------

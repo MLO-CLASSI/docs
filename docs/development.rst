@@ -59,10 +59,12 @@ and run them with:
    python -m pytest sim/tests
    python -m pytest pipeline/tests
 
-The suites cover physical geometry and rendering, detector noise, WCS
-serialization, Level-1 calibration and extraction, FITS output, rebinning, and
-the command-line interface. Scientific behavior changes should update or add a
-regression fixture rather than relying only on a manual notebook check.
+The suites cover physical geometry and rendering, detector noise, simulator
+``WavelengthSolution1D`` mappings, Level-1 calibration and extraction, FITS
+output, rebinning, Level-2 ASDF wavelength-solution round trips and sky-line
+refinement, and the command-line interface. Scientific behavior changes should
+update or add a regression fixture rather than relying only on a manual
+notebook check.
 
 Future API documentation
 ------------------------

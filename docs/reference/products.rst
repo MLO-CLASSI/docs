@@ -69,6 +69,29 @@ trailing native pixels omitted because they did not form a complete bin, and
 ``EXTRACT=BOXCAR``. A rebinned sample is masked if any contributing native
 sample was masked.
 
+Wavelength-calibration references
+---------------------------------
+
+The baseline wavelength calibration is a versioned ASDF reference product, not
+a science spectrum. One file contains every fiber trace under the
+``classi_wavesol`` tree. Its top-level metadata records
+``format=CLASSI-WAVESOL``, format version 1, creation time, trace count,
+zero-based pixel origin, dispersion axis 1, wavelength unit and air/vacuum
+medium, source arc filename, and lamp names.
+
+Each trace stores its ID, a GWCS-backed ``WavelengthSolution1D`` and native
+pixel bounding box, fit RMS values, and the matched arc-line pixels,
+wavelengths, residuals, used/rejected flags, and identifiers. All traces in one
+file must use the same wavelength unit and medium. ``read_wavesol()`` validates
+these conventions when restoring the trace-ID mapping.
+
+The `pipeline Level-2 reference`_ is the authoritative format description. No
+Level-2 science FITS product is defined; the ASDF file is the reusable
+calibration object that such a product will reference or consume.
+
+.. _pipeline Level-2 reference:
+   https://github.com/MLO-CLASSI/pipeline#l2---physical-spectral-calibration
+
 Simulation products
 -------------------
 

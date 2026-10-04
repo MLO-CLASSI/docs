@@ -42,7 +42,7 @@ shared calibration/reference files from being copied into every repository.
        instrument configuration, exposure time, and optional photometric scaling.
    * - ``sim`` / ``classi-sim`` / ``simulator``
      - Forward-model spectra through the optical geometry and detector to produce
-       realistic synthetic data products.
+       realistic synthetic data products and reusable wavelength mappings.
    * - ``pipeline`` / ``classi-pipeline`` / ``pipeline``
      - Reduce detector frames and extract one-dimensional spectra from the fiber
        traces, carrying masks and uncertainties through the reduction.
@@ -90,10 +90,11 @@ are not always identical; the table above lists them in that order.
    python -m pip install -e ./pipeline
    python -m pip install -e ./ics
 
-The ICS requires Python 3.11 or newer. Once installed, launch it with
-``classi-ics``; its Python modules are imported under ``ics`` (for
-example, ``ics.web``). The ETC and pipeline likewise provide the
-``classi-etc`` and ``classi-pipeline`` commands.
+The ICS and simulator, including packages such as the ETC that depend on the
+simulator, require Python 3.11 or newer. Once installed, launch the ICS with
+``classi-ics``; its Python modules are imported under ``ics`` (for example,
+``ics.web``). The ETC and pipeline likewise provide the ``classi-etc`` and
+``classi-pipeline`` commands.
 
 The ICS can be kept in a separate environment because hardware-control stacks can
 have tighter platform and version constraints than the analysis software.
