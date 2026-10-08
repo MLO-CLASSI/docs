@@ -91,9 +91,11 @@ Level-2 wavelength calibration
    Fit measured science-exposure sky-line centroids against a baseline arc
    solution. ``mode="auto"`` fits a pixel shift from one line and an affine
    shift plus stretch from two or more lines. Optional centroid uncertainties
-   weight the fit. The returned ``SkyRefinement`` can compose the correction
-   with the baseline through ``refined_solution(...)`` without refitting its
-   higher-order shape.
+   weight the fit. Every reference wavelength must map to a finite master pixel
+   within the baseline solution's lower-inclusive, upper-exclusive pixel bounds;
+   inputs outside those bounds raise ``ValueError``. The returned
+   ``SkyRefinement`` can compose the correction with the baseline through
+   ``refined_solution(...)`` without refitting its higher-order shape.
 
 Wavelength-solution pixel coordinates are zero-based native detector
 coordinates along array axis 1. ``pix_bounds`` uses a lower-inclusive,
