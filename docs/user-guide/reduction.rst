@@ -89,15 +89,20 @@ Target photometric anchoring
 
 After wavelength and spectrophotometric calibration, the optional Level-3
 library interface can anchor a target spectrum to external broadband
-photometry. A single band fits a grey scale factor, two bands also fit a colour
-term, and three or more bands fit up to quadratic curvature in log wavelength
-by default. Nearly simultaneous B/V/R target photometry is the intended common
-case.
+photometry. Pass a calibrated ``specutils.Spectrum`` and an
+``astropy.table.Table`` with ``band`` and AB-magnitude ``mag`` columns;
+``mag_err`` is optional. Band names normally use SVO Filter Profile Service
+identifiers, while custom response curves can be supplied as ``Bandpass``
+objects.
 
-The corrected flux and per-sample statistical uncertainty remain separate from
-the fitted coefficient covariance, which represents wavelength-correlated
-photometric-calibration uncertainty. L3 has no FITS or command-line wrapper
-until the L2 product format is defined.
+``pipeline.l3.mangle()`` delegates to ``specmangle`` and fits a positive
+natural-cubic-spline correction in log wavelength and log flux scale. It
+returns the corrected spectrum together with passband coverage and residual
+diagnostics. The corrected per-sample statistical uncertainty remains separate
+from the correlated uncertainty in the fitted correction. See the
+:doc:`pipeline package reference <../packages/pipeline>` for the current public
+interface and authoritative upstream links. L3 has no FITS or command-line
+wrapper until the L2 product format is defined.
 
 Validation with the simulator
 -----------------------------

@@ -21,11 +21,12 @@ The distribution is ``classi-pipeline`` and its import namespace is
        --gain 1.2 --read-noise 3.5 \
        --rebin 4 --plot
 
-The dependency specification installs ``specreduce`` directly from the
-``main`` branch of its GitHub repository and declares ``asdf`` explicitly for
-wavelength-calibration reference files. A reproducible pipeline environment
-should record the resolved ``specreduce`` commit as well as the CLASSI commit;
-installing this revision requires Git and network access to GitHub.
+The dependency specification installs ``specreduce`` and ``specmangle``
+directly from the ``main`` branches of their GitHub repositories and declares
+``asdf`` explicitly for wavelength-calibration reference files. A reproducible
+pipeline environment should record the resolved commits for both Git
+dependencies as well as the CLASSI commit; installing this revision requires
+Git and network access to GitHub.
 
 Use ``--centers`` for an explicit comma-separated list, or ``--center`` and
 ``--spacing`` with the configurable ``--n-traces`` value. Bias, dark, and flat
@@ -115,18 +116,31 @@ tree and mathematical refinement model.
 Level-3 photometric anchoring
 -----------------------------
 
-The ``pipeline.l3`` module fits a positive, smooth multiplicative correction
-from broadband photometry. ``PhotometricPoint`` records a band, magnitude,
-uncertainty, and magnitude system; ``fit_photometric_correction`` accepts those
-points plus a calibrated spectrum. One band fits a grey scale factor, two bands
-also fit colour, and three or more fit up to quadratic curvature in log
-wavelength by default. Built-in aliases cover Johnson B/V and Cousins R/I, and
-callers can supply arbitrary ``synphot`` bandpasses.
+The ``pipeline.l3`` module re-exports ``specmangle.mangle``, ``Bandpass``, and
+``MangleResult``. ``mangle`` accepts a wavelength- and flux-calibrated
+``specutils.Spectrum`` plus an ``astropy.table.Table`` containing ``band`` and
+``mag`` columns and, optionally, ``mag_err``. Magnitudes are currently AB.
+Band names are normally SVO Filter Profile Service identifiers; callers can
+instead supply custom response curves as ``Bandpass`` objects.
 
-``apply_photometric_correction`` scales the flux and its per-sample statistical
-uncertainty. The returned ``PhotometricCorrection.covariance`` separately
-represents the wavelength-correlated calibration uncertainty. L3 has no FITS or
-command-line wrapper because the L2 science-product format is not defined.
+The correction is a natural cubic spline in log wavelength and log flux scale,
+with one anchor for each usable unique passband and constant extrapolation
+beyond the edge anchors. By default, a passband is excluded when less than 98%
+of its AB-reference signal falls within valid spectrum samples. ``MangleResult``
+contains the corrected spectrum, correction, photometric diagnostics, and fit
+covariance. The input statistical uncertainty is scaled with the correction;
+uncertainty in the fitted correction remains separate because it is correlated
+across wavelength. L3 has no FITS or command-line wrapper because the L2
+science-product format is not defined.
+
+The pipeline repository's `Level-3 reference`_ describes the supported input
+schema and re-exported interface. The `specmangle reference`_ is authoritative
+for model options, coverage diagnostics, custom bandpasses, and result fields.
+
+.. _Level-3 reference:
+   https://github.com/MLO-CLASSI/pipeline#l3---photometric-calibration
+.. _specmangle reference:
+   https://github.com/cgobat/specmangle
 
 Primary extraction interface
 ----------------------------
