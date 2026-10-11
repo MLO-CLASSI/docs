@@ -10,8 +10,9 @@ preserving detector masks, uncertainties, and per-fiber identity.
 Installation and command line
 -----------------------------
 
-The distribution is ``classi-pipeline`` and its import namespace is
-``pipeline``. Installation provides the ``classi-pipeline`` command:
+The distribution is ``classi-pipeline``, requires Python 3.12 or newer, and
+uses the ``pipeline`` import namespace. Installation provides the
+``classi-pipeline`` command:
 
 .. code-block:: bash
 

@@ -91,10 +91,11 @@ are not always identical; the table above lists them in that order.
    python -m pip install -e ./ics
 
 The ICS and simulator, including packages such as the ETC that depend on the
-simulator, require Python 3.11 or newer. Once installed, launch the ICS with
-``classi-ics``; its Python modules are imported under ``ics`` (for example,
-``ics.web``). The ETC and pipeline likewise provide the ``classi-etc`` and
-``classi-pipeline`` commands.
+simulator, require Python 3.11 or newer. The pipeline requires Python 3.12 or
+newer because it tracks the latest unreleased ``specreduce`` revision. Once
+installed, launch the ICS with ``classi-ics``; its Python modules are imported
+under ``ics`` (for example, ``ics.web``). The ETC and pipeline likewise provide
+the ``classi-etc`` and ``classi-pipeline`` commands.
 
 The ICS can be kept in a separate environment because hardware-control stacks can
 have tighter platform and version constraints than the analysis software.

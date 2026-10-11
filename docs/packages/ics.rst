@@ -42,8 +42,13 @@ ordinary HTTP.
 
 The Alpaca acquisition-camera backend starts an exposure, polls ``ImageReady``,
 retrieves ``ImageArray``, converts the Alpaca X-major array to NumPy/FITS
-``(y, x)`` order, and writes
-``previews/latest_guide_preview.fits`` beneath the configured data root.
+``(y, x)`` order, and writes ``previews/latest_guide_preview.fits`` beneath the
+configured data root. The exposure time must be finite and positive. Before
+starting an exposure, the ICS removes the previous preview; a bridge error,
+timeout, or invalid returned image therefore cannot leave an older file
+presented as the latest result. Invalid requests return the supervisor to
+``IDLE``, while failures after a valid request put it in ``ERROR`` and preserve
+the failure message. A later successful capture returns it to ``IDLE``.
 
 .. warning::
 
@@ -65,6 +70,14 @@ The loader requests the full detector dimensions with no JS9 display binning,
 preventing the browser from cropping or resampling the preview. This keeps the
 preview faithful to the detector data and permits normal FITS inspection tools
 in the browser.
+
+The UI pins the JS9 3.10.0 all-in-one CSS and JavaScript bundles. The ICS server
+retrieves them from the GitHub release configured by ``[js9] asset_base`` and
+relays only those two named assets under versioned local URLs with the correct
+browser MIME types. The server caches each download for its process lifetime,
+and browsers receive an immutable one-year cache directive. The ICS host must
+therefore be able to reach the configured asset source when an asset is first
+requested; an upstream retrieval failure is returned as HTTP 502.
 
 Configuration
 -------------

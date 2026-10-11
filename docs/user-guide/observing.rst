@@ -146,6 +146,13 @@ setting should remain ``mock`` until the native stage has a verified network
 mapping. The guide/acquisition camera can independently use
 ``guide_camera = alpaca`` with Camera 0.
 
+A failed guide-camera capture removes ``previews/latest_guide_preview.fits``
+rather than leaving a stale image in place. A non-finite or non-positive
+exposure request is rejected while the ICS remains ``IDLE``; a bridge error,
+timeout, or malformed image puts the ICS in ``ERROR`` and surfaces the failure
+message. After correcting the underlying problem, a successful retry publishes
+a new preview and returns the ICS to ``IDLE``.
+
 Operational caution
 -------------------
 

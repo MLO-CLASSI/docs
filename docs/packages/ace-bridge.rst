@@ -30,6 +30,15 @@ archive directory for the resulting FITS file and returns its pixels through
 Alpaca ``ImageArray``. Subframes are not implemented, and the camera-specific
 limits and installed sensor geometry still require on-telescope verification.
 
+An exposure duration must be finite and within the configured minimum and
+maximum. Each new request clears the previously cached image and accepts only a
+new FITS file produced after that request. If ACE raises an error or no new file
+appears before the timeout, the bridge reports ``cameraError``, keeps
+``ImageReady`` false in ``DeviceState``, and does not expose the previous image
+as the result. Direct ``ImageReady`` and ``ImageArray`` requests report the
+stored failure. A later valid exposure can clear the error and publish a new
+image normally.
+
 The ACE ``XYStage`` interface is not advertised because its motion and position
 API has not been verified. The ICS therefore implements only the mock stage
 backend and rejects ``stage = alpaca``. That setting should remain ``mock``
